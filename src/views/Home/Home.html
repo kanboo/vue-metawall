@@ -1,0 +1,173 @@
+<div class="home bg_pattern">
+  <div class="container py-12 min-h-screen">
+    <section class="flex justify-between items-start gap-7">
+      <div class="flex-auto space-y-4">
+        <div class="flex flex-col md:flex-row justify-between gap-2 md:gap-3">
+          <div class="form-control">
+            <label for="articleType"></label>
+            <select name="articleType" id="articleType"
+              class="py-3 px-4 border-2 border-black h-full focus:outline-none">
+              <option value="new">最新貼文</option>
+            </select>
+          </div>
+          <div class="input-group w-full">
+            <label for="searchInput"></label>
+            <input type="text" id="searchInput" name="searchInput" placeholder="搜尋貼文"
+              class="w-full py-3 pl-4 border-2 border-black focus-visible:outline-none" />
+            <button type="button" class="bg-primary btn-square text-white border-2 border-l-0 border-black p-3">
+              <i class="fa-solid fa-magnifying-glass text-xl"></i>
+            </button>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <div class="flex gap-[6px] p-4 border-b-2 border-black">
+              <div class="bg-danger-dark rounded-full h-2 w-2 border border-[#707070]"></div>
+              <div class="bg-warning rounded-full h-2 w-2 border border-[#707070]"></div>
+              <div class="bg-accent rounded-full h-2 w-2 border border-[#707070]"></div>
+            </div>
+          </div>
+          <div class="card-bdoy p-8">
+            <p class="text-center text-gray-base">目前尚無動態，新增一則貼文吧！</p>
+          </div>
+        </div>
+        <div class="card cursor-pointer group">
+          <div class="card-body">
+            <div class="flex gap-4">
+              <img :src="IMG_USER" class="max-h-[45px] max-w-[45px]" alt="avatarImage" />
+              <div class="">
+                <p
+                  class="font-bold mb-1 inline-block group-hover:text-primary group-hover:border-b group-hover:border-primary">
+                  邊緣小杰
+                </p>
+                <p class="text-xs text-gray-base font-num">2022/1/10 12:00</p>
+              </div>
+            </div>
+            <p>外面看起來就超冷.... <br />我決定回被窩繼續睡....>.&lt;</p>
+            <img :src="IMG_IMAGE" alt="" />
+            <div class="report-message space-y-4 hidden group-hover:block">
+              <div class="flex gap-2">
+                <i class="fa-regular fa-thumbs-up text-primary"></i>
+                <span class="font-num text-xs">12</span>
+              </div>
+              <div class="flex gap-2 items-center">
+                <img :src="IMG_USER" class="max-h-[40px] max-w-[40px]" alt="avatarImage" />
+                <div class="input-group w-full flex-auto">
+                  <label for="reportMsg"></label>
+                  <input type="text" name="reportMsg" id="reportMsg" placeholder="留言..."
+                    class="py-2 pl-4 border-2 border-black w-full focus-visible:outline-none" />
+                  <button type="button" class="bg-primary w-1/3 text-white border-2 border-l-0 border-black">
+                    留言
+                  </button>
+                </div>
+              </div>
+              <div class="bg-gray rounded-lg p-4">
+                <div class="flex gap-4">
+                  <img :src="IMG_USER4" class="max-h-[40px] max-w-[40px]" alt="avatarImage" />
+                  <div class="space-y-1">
+                    <p class="">梅琳娜</p>
+                    <p class="text-xs text-gray-base font-num">2022/1/10 12:00</p>
+                    <p>真的～我已經準備冬眠了</p>
+                  </div>
+                </div>
+              </div>
+              <div class="bg-gray rounded-lg p-4">
+                <div class="flex gap-4">
+                  <img :src="IMG_USER5" class="max-h-[40px] max-w-[40px]" alt="avatarImage" />
+                  <div class="space-y-1">
+                    <p class="">初始之王－葛孚雷</p>
+                    <p class="text-xs text-gray-base font-num">2022/1/10 12:00</p>
+                    <p>真的～我已經準備冬眠了</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-body">
+            <div class="flex gap-4">
+              <img :src="IMG_USER" alt="avatarImage" />
+              <div class="">
+                <p class="font-bold mb-1">「百智爵士」基甸．奧夫尼爾</p>
+                <p class="text-xs text-gray-base font-num">2022/1/10 12:00</p>
+              </div>
+            </div>
+            <p>褪色者無法成為王，即使是你也一樣。</p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-body">
+            <div class="flex gap-4">
+              <img :src="IMG_USER3" alt="avatarImage" />
+              <div class="">
+                <p class="font-bold mb-1">菈妮</p>
+                <p class="text-xs text-gray-base font-num">2022/1/10 12:00</p>
+              </div>
+            </div>
+            <p>來，一起走吧...我永遠的王啊</p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-body">
+            <div class="flex gap-4">
+              <img :src="IMG_USER3" alt="avatarImage" />
+              <div class="">
+                <p class="font-bold mb-1">菈妮</p>
+                <p class="text-xs text-gray-base font-num">2022/1/10 12:00</p>
+              </div>
+            </div>
+            <p>搶到想要的 NFT 啦！ya~~</p>
+            <img :src="IMG_USER2" alt="" />
+            <div class="flex items-center gap-2">
+              <i class="fa-regular fa-thumbs-up text-gray-base"></i>
+              <span class="text-gray-base">成為第一個按讚的朋友</span>
+            </div>
+            <div class="flex gap-2 items-center">
+              <img :src="IMG_USER" class="max-h-[40px] max-w-[40px]" alt="avatarImage" />
+              <div class="input-group w-full flex-auto">
+                <label for="reportMsg"></label>
+                <input type="text" name="reportMsg" id="reportMsg" placeholder="留言..."
+                  class="py-2 pl-4 border-2 border-black w-full focus-visible:outline-none" value="好羨慕ㄛ！！" />
+                <button type="button" class="bg-secondary w-1/3 border-2 border-l-0 border-black">
+                  留言
+                  <span>
+                    <i class="fa-solid fa-spinner animate-spin"></i>
+                  </span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="px-4 md:px-0 fixed md:static w-full md:w-4/12 left-0 bottom-0 -translate-y-4 md:translate-y-0">
+        <nav
+          class="flex flex-row md:flex-col justify-center md:justify-start py-2 rounded-r-full rounded-l-full md:rounded-none md:py-8 md:px-6 md:space-y-6 bg-gray md:bg-white border-2 border-black md:mx-0 gap-6 md:gap-0">
+          <a href="./src/views/posts.html"
+            class="text-center icon-circle shadow-none md:shadow-side md:rounded-lg md:btn btn-primary order-4 md:order-none">
+            <i class="fa-solid fa-plus text-white md:hidden"></i>
+            <span class="hidden md:block">張貼動態</span>
+          </a>
+          <a href="/"
+            class="icon-circle bg-white border-2 border-black md:border-0 order-1 md:order-none md:flex justify-start items-center gap-4">
+            <i class="fa-solid fa-house md:hidden"></i>
+            <img :src="IMG_USER" alt="" class="hidden md:block rounded-full" />
+            <span class="font-bold hidden md:block">邊緣小杰</span>
+          </a>
+          <a href="./src/views/follow.html" class="flex justify-start items-center gap-4 group">
+            <div class="icon-circle bg-white md:bg-info group-hover:md:bg-primary">
+              <i class="fa-regular fa-bell text-xl group-hover:text-white"></i>
+            </div>
+            <span class="hidden md:block font-bold">追蹤名單</span>
+          </a>
+          <a href="./src/views/like.html" class="flex justify-start items-center gap-4 group">
+            <div class="icon-circle bg-white md:bg-info group-hover:md:bg-primary">
+              <i class="fa-regular fa-thumbs-up text-xl group-hover:text-white"></i>
+            </div>
+            <span class="hidden md:block font-bold">我按讚的文章</span>
+          </a>
+        </nav>
+      </div>
+    </section>
+  </div>
+</div>
