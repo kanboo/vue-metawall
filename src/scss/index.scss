@@ -1,0 +1,66 @@
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css');
+@import url('https://fonts.googleapis.com/css2?family=Azeret+Mono:wght@400;700&family=Baloo+Da+2&family=Paytone+One&display=swap');
+
+@tailwind base;
+
+.bg_pattern {
+  background-color: #efece7;
+  background-image: linear-gradient(#70707050 1px, transparent 1px),
+    linear-gradient(to right, #70707050 1px, #efece7 1px);
+  background-size: 64px 64px;
+}
+
+@tailwind components;
+
+.btn {
+  @apply border-2 border-black rounded-lg w-full grid place-content-center py-4;
+}
+.btn-square {
+  @apply rounded-none;
+}
+
+.btn-primary {
+  @apply bg-primary text-white shadow-side transition-all duration-300;
+  &:hover {
+    @apply bg-secondary text-black;
+  }
+}
+
+.btn-info {
+  @apply bg-info-dark border-[#808080] text-white;
+}
+
+.from-control {
+  @apply flex flex-col;
+}
+
+.input-group {
+  @apply flex;
+}
+
+.form-input {
+  @apply w-full border-2 border-black bg-white py-4 px-6 focus-visible:outline-none;
+}
+
+.form-errorMsg {
+  @apply text-danger text-sm mb-4 transition-all duration-300;
+}
+
+.icon-circle {
+  @apply rounded-full p-2 min-h-[50px] min-w-[50px] grid place-content-center border-2 border-black transition-all duration-300;
+}
+
+.card {
+  @apply bg-white rounded-lg shadow-bottom border-2 border-black;
+  .avatar-title {
+    &:hover {
+      @apply text-primary border-b border-primary;
+    }
+  }
+}
+
+.card-body {
+  @apply flex flex-col p-6 space-y-4;
+}
+
+@tailwind utilities;
