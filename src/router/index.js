@@ -8,6 +8,11 @@ const router = createRouter({
       path: "/",
       component: () => import("@/views/Home"),
     },
+    {
+      name: "PostCreate",
+      path: "/posts/create",
+      component: () => import("@/views/PostCreate"),
+    },
   ],
 });
 

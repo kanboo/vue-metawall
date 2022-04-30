@@ -1,0 +1,6 @@
+{
+  "name": "PostCreate",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./PostCreate.vue"
+}
