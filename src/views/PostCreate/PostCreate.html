@@ -18,7 +18,7 @@
             <label for="image-upload" class="py-1 px-8 bg-black text-white rounded cursor-pointer w-auto">上傳圖片
               <input id="image-upload" type="file" class="hidden" @change="onFileChange" />
             </label>
-            <img v-if="displayImage" :src="displayImage" class="mx-auto max-h-[157px] max-w-[485px] object-contain"
+            <img v-if="form.image" :src="form.image" class="mx-auto max-h-[157px] max-w-[485px] object-contain"
               alt="" />
             <div class="w-4/6 mx-auto pt-4 group">
               <!-- <ul class="text-danger text-center mb-4 hidden group-hover:block">
