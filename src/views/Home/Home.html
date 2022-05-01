@@ -33,6 +33,7 @@
                 </div>
               </div>
               <p>{{ post.content }}</p>
+              <img v-if="post.image" :src="post.image" class="max-h-[157px] max-w-[485px] object-contain" alt="" />
             </div>
           </div>
 

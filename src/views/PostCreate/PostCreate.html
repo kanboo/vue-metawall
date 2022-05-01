@@ -12,19 +12,20 @@
           <div class="card-body items-start p-8">
             <div class="form-control mx-auto space-y-1">
               <label for="postContent">貼文內容</label>
-              <textarea id="postContent" type="text" name="postContent" rows="6" cols="45" class="form-input py-3 px-6"
-                placeholder="輸入您的貼文內容"></textarea>
+              <textarea v-model="form.content" id="postContent" type="text" name="postContent" rows="6" cols="45"
+                class="form-input py-3 px-6" placeholder="輸入您的貼文內容"></textarea>
             </div>
             <label for="image-upload" class="py-1 px-8 bg-black text-white rounded cursor-pointer w-auto">上傳圖片
-              <input id="image-upload" type="file" class="hidden" />
+              <input id="image-upload" type="file" class="hidden" @change="onFileChange" />
             </label>
-            <img src="@/assets/images/image.png" class="" alt="" />
+            <img v-if="displayImage" :src="displayImage" class="mx-auto max-h-[157px] max-w-[485px] object-contain"
+              alt="" />
             <div class="w-4/6 mx-auto pt-4 group">
-              <ul class="text-danger text-center mb-4 hidden group-hover:block">
+              <!-- <ul class="text-danger text-center mb-4 hidden group-hover:block">
                 <li>圖片檔案過大，僅限 1mb 以下檔案</li>
                 <li>圖片格式錯誤，僅限 JPG、PNG 圖片</li>
-              </ul>
-              <button type="button" class="btn bg-info-dark hover:bg-secondary hover:shadow-side">
+              </ul> -->
+              <button type="button" class="btn bg-info-dark hover:bg-secondary hover:shadow-side" @click="submit">
                 送出貼文
               </button>
             </div>
