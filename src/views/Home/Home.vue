@@ -1,22 +1,47 @@
 <script>
-import IMG_IMAGE from "@/assets/images/image.png";
-import IMG_USER from "@/assets/images/user.png";
-import IMG_USER2 from "@/assets/images/user2.png";
-import IMG_USER3 from "@/assets/images/user3.png";
-import IMG_USER4 from "@/assets/images/user4.png";
-import IMG_USER5 from "@/assets/images/user5.png";
+import { computed, ref, watch } from "vue";
+import axios from "axios";
+
+const SORT_TYPE = {
+  ASC: "asc",
+  DESC: "desc",
+};
 
 export default {
   name: "Home",
 
   setup() {
+    const search = ref({
+      timeSort: SORT_TYPE.DESC,
+      keyword: "",
+    });
+    const posts = ref([]);
+
+    const normalizedPosts = computed(() => {
+      return posts.value.map((post) => {
+        return {
+          ...post,
+          userName: post?.user?.name ?? "",
+          userPhoto: post?.user?.photo ?? "",
+        };
+      });
+    });
+
+    const getPosts = async () => {
+      try {
+        const params = search.value;
+        const response = await axios.get("/api/posts", { params });
+        posts.value = response.data?.data ?? [];
+      } catch (e) {
+        console.error(e);
+      }
+    };
+    watch(search.value, () => getPosts(), { immediate: true });
+
     return {
-      IMG_IMAGE,
-      IMG_USER,
-      IMG_USER2,
-      IMG_USER3,
-      IMG_USER4,
-      IMG_USER5,
+      SORT_TYPE,
+      search,
+      normalizedPosts,
     };
   },
 };
