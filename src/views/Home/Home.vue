@@ -1,6 +1,6 @@
 <script>
 import { computed, ref, watch } from "vue";
-import axios from "axios";
+import axios from "@/plugins/http.js";
 
 const SORT_TYPE = {
   ASC: "asc",
@@ -30,10 +30,7 @@ export default {
     const getPosts = async () => {
       try {
         const params = search.value;
-        const response = await axios.get(
-          "https://infinite-wildwood-24756.herokuapp.com/posts",
-          { params }
-        );
+        const response = await axios.get("/api/posts", { params });
         posts.value = response.data?.data ?? [];
       } catch (e) {
         console.error(e);

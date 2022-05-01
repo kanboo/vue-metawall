@@ -1,7 +1,7 @@
 <script>
 import { ref } from "vue";
 import { useRouter } from "vue-router";
-import axios from "axios";
+import axios from "@/plugins/http.js";
 
 export default {
   name: "PostCreate",
@@ -21,10 +21,7 @@ export default {
         const file = files[0];
         const fd = new FormData();
         fd.append("image", file, file.name);
-        const response = await axios.post(
-          "https://infinite-wildwood-24756.herokuapp.com/upload-image",
-          fd
-        );
+        const response = await axios.post("/api/images", fd);
         form.value.image = response.data?.data?.link ?? "";
       } catch (e) {
         console.error(e);
@@ -38,10 +35,7 @@ export default {
           ...form.value,
         };
 
-        await axios.post(
-          "https://infinite-wildwood-24756.herokuapp.com/posts",
-          postData
-        );
+        await axios.post("/api/posts", postData);
 
         router.push({ name: "Home" });
       } catch (e) {
