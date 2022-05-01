@@ -30,7 +30,10 @@ export default {
     const getPosts = async () => {
       try {
         const params = search.value;
-        const response = await axios.get("/api/posts", { params });
+        const response = await axios.get(
+          "https://infinite-wildwood-24756.herokuapp.com/posts",
+          { params }
+        );
         posts.value = response.data?.data ?? [];
       } catch (e) {
         console.error(e);
