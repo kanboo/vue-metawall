@@ -27,7 +27,7 @@ export default {
     });
     const posts = ref([]);
 
-    const [isFetchLoading, toggleFetchLoading] = useToggle(false);
+    const [isFetchLoading, toggleFetchLoading] = useToggle(true);
 
     const normalizedPosts = computed(() => {
       return posts.value.map((post) => {
