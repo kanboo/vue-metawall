@@ -2,6 +2,7 @@
   <div class="container py-12 min-h-screen">
     <section class="flex justify-between items-start gap-7">
       <div class="flex-auto space-y-4">
+        <!-- 搜尋區 -->
         <div class="flex flex-col md:flex-row justify-between gap-2 md:gap-3">
           <div class="form-control">
             <label for="articleType"></label>
@@ -21,7 +22,11 @@
           </div>
         </div>
 
-        <template v-if="normalizedPosts.length">
+        <!-- 貼文區 -->
+        <template v-if="isFetchLoading">
+          <CardSkeleton v-for="i in 2" />
+        </template>
+        <template v-else-if="normalizedPosts.length">
           <div class="card" v-for="post in normalizedPosts" :key="post._id">
             <div class="card-body">
               <div class="flex gap-4">
@@ -52,6 +57,7 @@
         </template>
       </div>
 
+      <!-- 側邊 Menu -->
       <SideMenu />
     </section>
   </div>

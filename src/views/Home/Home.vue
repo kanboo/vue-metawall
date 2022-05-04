@@ -1,8 +1,11 @@
 <script>
 import { computed, ref, watch } from "vue";
+import { useToggle, useDebounceFn } from "@vueuse/core";
+
 import axios from "@/plugins/http.js";
 
 import SideMenu from "@/components/SideMenu";
+import CardSkeleton from "@/components/CardSkeleton";
 
 const SORT_TYPE = {
   ASC: "asc",
@@ -14,6 +17,7 @@ export default {
 
   components: {
     SideMenu,
+    CardSkeleton,
   },
 
   setup() {
@@ -22,6 +26,8 @@ export default {
       keyword: "",
     });
     const posts = ref([]);
+
+    const [isFetchLoading, toggleFetchLoading] = useToggle(false);
 
     const normalizedPosts = computed(() => {
       return posts.value.map((post) => {
@@ -33,20 +39,25 @@ export default {
       });
     });
 
-    const getPosts = async () => {
+    const getPosts = useDebounceFn(async () => {
       try {
+        toggleFetchLoading(true);
+
         const params = search.value;
         const response = await axios.get("/api/posts", { params });
         posts.value = response.data?.data ?? [];
       } catch (e) {
         console.error(e);
+      } finally {
+        toggleFetchLoading(false);
       }
-    };
+    }, 500);
     watch(search.value, () => getPosts(), { immediate: true });
 
     return {
       SORT_TYPE,
       search,
+      isFetchLoading,
       normalizedPosts,
     };
   },

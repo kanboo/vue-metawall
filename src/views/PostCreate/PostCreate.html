@@ -15,11 +15,22 @@
               <textarea v-model="form.content" id="postContent" type="text" name="postContent" rows="6" cols="45"
                 class="form-input py-3 px-6" placeholder="輸入您的貼文內容"></textarea>
             </div>
-            <label for="image-upload" class="py-1 px-8 bg-black text-white rounded cursor-pointer w-auto">上傳圖片
+            <label for="image-upload" class="py-1 px-8 bg-black text-white rounded cursor-pointer w-auto">
+
+              <span>上傳圖片</span>
+
               <input id="image-upload" type="file" class="hidden" @change="onFileChange" />
             </label>
-            <img v-if="form.image" :src="form.image" class="mx-auto max-h-[157px] max-w-[485px] object-contain"
-              alt="" />
+
+            <template v-if="isUploading">
+              <div style="border-top-color:transparent"
+                class="w-16 h-16 mx-auto border-4 border-blue-400 border-dotted rounded-full animate-spin"></div>
+            </template>
+            <template v-else>
+              <img v-if="form.image" :src="form.image" class="mx-auto max-h-[157px] max-w-[485px] object-contain"
+                alt="" />
+            </template>
+
             <div class="w-4/6 mx-auto pt-4 group">
               <!-- <ul class="text-danger text-center mb-4 hidden group-hover:block">
                 <li>圖片檔案過大，僅限 1mb 以下檔案</li>
@@ -35,6 +46,7 @@
         </div>
       </div>
 
+      <!-- 側邊 Menu -->
       <SideMenu />
     </section>
   </div>
