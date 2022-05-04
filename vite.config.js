@@ -20,10 +20,9 @@ export default defineConfig(({ mode }) => {
       proxy: {
         "/api": {
           // eslint-disable-next-line no-undef
-          target: `${process.env.VITE_BACKEND_HOST || "http://localhost:3005/api/"
+          target: `${process.env.VITE_BACKEND_HOST || "http://localhost:3005/"
             }/`, // 遠端 URL Domain
           changeOrigin: true,
-          rewrite: (path) => path.replace(/^\/api/, ""),
         },
       },
     },
