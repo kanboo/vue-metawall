@@ -2,6 +2,8 @@
 import { computed, ref, watch } from "vue";
 import axios from "@/plugins/http.js";
 
+import SideMenu from "@/components/SideMenu";
+
 const SORT_TYPE = {
   ASC: "asc",
   DESC: "desc",
@@ -9,6 +11,10 @@ const SORT_TYPE = {
 
 export default {
   name: "Home",
+
+  components: {
+    SideMenu,
+  },
 
   setup() {
     const search = ref({

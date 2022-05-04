@@ -3,8 +3,14 @@ import { ref } from "vue";
 import { useRouter } from "vue-router";
 import axios from "@/plugins/http.js";
 
+import SideMenu from "@/components/SideMenu";
+
 export default {
   name: "PostCreate",
+
+  components: {
+    SideMenu,
+  },
 
   setup() {
     const router = useRouter();

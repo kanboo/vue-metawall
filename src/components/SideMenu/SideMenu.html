@@ -1,0 +1,28 @@
+<div class="side-menu px-4 md:px-0 fixed md:static w-full md:w-4/12 left-0 bottom-0 -translate-y-4 md:translate-y-0">
+  <nav
+    class="flex flex-row md:flex-col justify-center md:justify-start py-2 rounded-r-full rounded-l-full md:rounded-none md:py-8 md:px-6 md:space-y-6 bg-gray md:bg-white border-2 border-black md:mx-0 gap-6 md:gap-0">
+    <router-link :to="{ name: 'PostCreate'}"
+      class="text-center icon-circle shadow-none md:shadow-side md:rounded-lg md:btn btn-primary order-4 md:order-none">
+      <i class="fa-solid fa-plus text-white md:hidden"></i>
+      <span class="hidden md:block">張貼動態</span>
+    </router-link>
+    <a href=""
+      class="icon-circle bg-white border-2 border-black md:border-0 order-1 md:order-none md:flex justify-start items-center gap-4">
+      <i class="fa-solid fa-house md:hidden"></i>
+      <img src="@/assets/images/user.png" alt="" class="hidden md:block rounded-full" />
+      <span class="font-bold hidden md:block">邊緣小杰</span>
+    </a>
+    <a href="" class="flex justify-start items-center gap-4 group">
+      <div class="icon-circle bg-white md:bg-info group-hover:md:bg-primary">
+        <i class="fa-regular fa-bell text-xl group-hover:text-white"></i>
+      </div>
+      <span class="hidden md:block font-bold">追蹤名單</span>
+    </a>
+    <a href="" class="flex justify-start items-center gap-4 group">
+      <div class="icon-circle bg-white md:bg-info group-hover:md:bg-primary">
+        <i class="fa-regular fa-thumbs-up text-xl group-hover:text-white"></i>
+      </div>
+      <span class="hidden md:block font-bold">我按讚的文章</span>
+    </a>
+  </nav>
+</div>
