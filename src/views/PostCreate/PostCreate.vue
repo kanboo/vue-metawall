@@ -30,6 +30,8 @@ export default {
 
     const submit = async () => {
       try {
+        if (!form.value.content) return;
+
         const postData = {
           user: "626e1a1e06f150686b003e03",
           ...form.value,
