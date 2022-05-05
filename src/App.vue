@@ -1,4 +1,6 @@
 <script>
+import { RouterView } from "vue-router";
+
 import ScreenLoading from "@/components/ScreenLoading";
 import Default from "./layouts/Default";
 
@@ -12,6 +14,7 @@ export default {
 
   setup() {
     return {
+      RouterView,
       isScreenLoading,
     };
   },
@@ -21,7 +24,7 @@ export default {
 <template>
   <ScreenLoading v-show="isScreenLoading" />
   <Default />
-  <router-view></router-view>
+  <RouterView />
 </template>
 
 <style lang="scss" scoped></style>
