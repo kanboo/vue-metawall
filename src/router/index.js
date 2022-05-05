@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
-import HomeView from "../views/Home";
+import HomeView from "@/views/Home/Home.vue";
 
 const router = createRouter({
   history: createWebHistory(),
@@ -12,7 +12,7 @@ const router = createRouter({
     {
       name: "PostCreate",
       path: "/posts/create",
-      component: () => import("@/views/PostCreate"),
+      component: () => import("@/views/PostCreate/PostCreate.vue"),
     },
   ],
 });
