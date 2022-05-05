@@ -21,7 +21,7 @@ export default {
 <template>
   <ScreenLoading v-show="isScreenLoading" />
   <Default />
-  <router-view />
+  <router-view></router-view>
 </template>
 
 <style lang="scss" scoped></style>
