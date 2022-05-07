@@ -1,32 +1,46 @@
 import { createRouter, createWebHistory } from "vue-router";
-import HomeView from "@/views/Home";
+import routes from "./routes";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
-  routes: [
-    {
-      name: "Home",
-      path: "/",
-      component: HomeView,
-    },
-    {
+  routes,
+});
+
+/**
+ * 適用於
+ *  - 身份驗證
+ *  - Fetch 全域資訊，如：User 資訊、Store 資訊...等
+ *
+ * @param to - 即將進入的路由
+ * @param from - 從何處進入的路由.
+ * @param next - (可選) 可設定前往哪裡的路由
+ *
+ * @description
+ * Vue Router 4 以後，next 已經變非必要選項了，
+ * 換句話說
+ * router.beforeEach 的回傳值
+ *  - true | undefined (預設情況)： 路由可以正常執行。
+ *  - false： 路由才會被中斷。
+ *  - Router path： 前往該路由
+ */
+router.beforeEach(async (to) => {
+  const requiresAuth = to.meta?.requiresAuth ?? true;
+  const isLoggedIn = false;
+
+  if (requiresAuth && !isLoggedIn) {
+    return {
       name: "Login",
-      path: "/login",
-      component: () => import("@/views/Login"),
-      meta: { isExcludeLayout: true },
-    },
-    {
-      name: "Register",
-      path: "/register",
-      component: () => import("@/views/Register"),
-      meta: { isExcludeLayout: true },
-    },
-    {
-      name: "PostCreate",
-      path: "/posts/create",
-      component: () => import("@/views/PostCreate"),
-    },
-  ],
+      query: { redirect: to.fullPath }, // 保存我们所在的位置，以便以后再来
+    };
+  }
+});
+
+/**
+ * 可搭配像是 GA 追蹤一類的工具，來記錄使用者的瀏覽紀錄，
+ * 這個 Hook 對於網站行為的分析來說是相當實用的功能。
+ */
+router.afterEach(() => {
+  // sendToAnalytics(to.fullPath);
 });
 
 export default router;

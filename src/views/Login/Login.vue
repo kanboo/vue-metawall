@@ -1,8 +1,6 @@
 <script>
 export default {
   name: "Login",
-  components: {},
-  props: {},
 };
 </script>
 

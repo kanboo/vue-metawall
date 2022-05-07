@@ -1,16 +1,7 @@
 <script>
-import { ref, computed } from 'vue'
-
 export default {
-  name: 'Register',
-  components: {},
-  props: {},
-
-  setup (props, context) {
-
-    return {}
-  },
-}
+  name: "Register",
+};
 </script>
 
 <template src="./Register.html"></template>
