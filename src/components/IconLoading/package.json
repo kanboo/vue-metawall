@@ -1,0 +1,6 @@
+{
+  "name": "IconLoading",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./IconLoading.vue"
+}
