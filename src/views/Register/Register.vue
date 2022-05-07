@@ -1,9 +1,12 @@
 <script>
 import { computed } from "vue";
+import { useRouter } from "vue-router";
+
 import { useForm, useField } from "vee-validate";
 import * as yup from "yup";
 import axios from "@/plugins/http.js";
 
+import { setUser, setApiToken } from "@/store/user";
 import apiErrorTypes from "@/constants/apiErrorTypes";
 
 import IconLoading from "@/components/IconLoading";
@@ -21,6 +24,8 @@ export default {
   },
 
   setup() {
+    const router = useRouter();
+
     const formValues = {
       email: "",
       name: "",
@@ -83,8 +88,13 @@ export default {
 
         const response = await axios.post("/api/users/register", values);
 
-        // TODO：登入操作
-        console.log("response", response.data);
+        const user = response.data?.data?.user ?? null;
+        const token = response.data?.data?.token ?? null;
+
+        setUser(user);
+        setApiToken(token);
+
+        router.push({ name: "Home" });
       } catch (e) {
         const errorType = e.response?.data?.errorType ?? null;
 

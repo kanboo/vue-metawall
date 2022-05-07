@@ -1,7 +1,11 @@
 <script>
 import { ref, computed } from "vue";
+import { useRoute, useRouter } from "vue-router";
 import { useForm, useField } from "vee-validate";
 import * as yup from "yup";
+import axios from "@/plugins/http.js";
+
+import { setUser, setApiToken } from "@/store/user";
 
 import IconLoading from "@/components/IconLoading";
 
@@ -18,6 +22,9 @@ export default {
   },
 
   setup() {
+    const route = useRoute();
+    const router = useRouter();
+
     const formValues = {
       email: "",
       password: "",
@@ -58,14 +65,26 @@ export default {
 
     const isLoginFailed = ref(false);
     const onSubmit = handleSubmit(async (values) => {
-      toggleScreenLoading(true);
-      console.log("Submit~~~~", values);
+      try {
+        toggleScreenLoading(true);
+        isLoginFailed.value = false;
 
-      // TODO：登入 API
-      setTimeout(() => {
+        const response = await axios.post("/api/users/login", values);
+
+        const user = response.data?.data?.user ?? null;
+        const token = response.data?.data?.token ?? null;
+
+        setUser(user);
+        setApiToken(token);
+
+        const redirectPath = route.query?.redirect ?? "/";
+        router.push(redirectPath);
+      } catch (e) {
         isLoginFailed.value = true;
+        console.error(e);
+      } finally {
         toggleScreenLoading(false);
-      }, 3000);
+      }
     });
 
     return {

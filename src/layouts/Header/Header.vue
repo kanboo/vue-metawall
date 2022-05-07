@@ -1,6 +1,14 @@
 <script>
+import { userName } from "@/store/user";
+
 export default {
   name: "Header",
+
+  setup() {
+    return {
+      userName,
+    };
+  },
 };
 </script>
 

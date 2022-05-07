@@ -1,6 +1,8 @@
 import { createRouter, createWebHistory } from "vue-router";
 import routes from "./routes";
 
+import { isLoggedIn } from "@/store/user";
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes,
@@ -25,9 +27,8 @@ const router = createRouter({
  */
 router.beforeEach(async (to) => {
   const requiresAuth = to.meta?.requiresAuth ?? true;
-  const isLoggedIn = false;
 
-  if (requiresAuth && !isLoggedIn) {
+  if (requiresAuth && !isLoggedIn.value) {
     return {
       name: "Login",
       query: { redirect: to.fullPath }, // 保存我们所在的位置，以便以后再来
