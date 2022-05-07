@@ -16,6 +16,12 @@ const router = createRouter({
       meta: { isExcludeLayout: true },
     },
     {
+      name: "Register",
+      path: "/register",
+      component: () => import("@/views/Register"),
+      meta: { isExcludeLayout: true },
+    },
+    {
       name: "PostCreate",
       path: "/posts/create",
       component: () => import("@/views/PostCreate"),
