@@ -2,6 +2,9 @@
 import { computed } from "vue";
 import { useForm, useField } from "vee-validate";
 import * as yup from "yup";
+import axios from "@/plugins/http.js";
+
+import apiErrorTypes from "@/constants/apiErrorTypes";
 
 import IconLoading from "@/components/IconLoading";
 
@@ -44,7 +47,7 @@ export default {
      *
      * @url https://vee-validate.logaretm.com/v4/api/use-form#api-reference
      */
-    const { errors, setFieldError, handleSubmit } = useForm({
+    const { errors, handleSubmit } = useForm({
       validationSchema,
       initialValues: formValues,
     });
@@ -69,19 +72,31 @@ export default {
     });
 
     const handleEmailBlur = async (e) => {
+      // TODO：優化體驗
       console.log("handleEmailBlur", e.target.value);
-      setFieldError("email", "1 - 此 Mail 已被存在！");
+      // setFieldError("email", "1 - 此 Mail 已被存在！");
     };
 
     const onSubmit = handleSubmit(async (values, actions) => {
-      toggleScreenLoading(true);
-      console.log("Submit~~~~", values);
+      try {
+        toggleScreenLoading(true);
 
-      // TODO：註冊 API
-      setTimeout(() => {
-        actions.setFieldError("email", "2 - 此 Mail 已被存在！");
+        const response = await axios.post("/api/users/register", values);
+
+        // TODO：登入操作
+        console.log("response", response.data);
+      } catch (e) {
+        const errorType = e.response?.data?.errorType ?? null;
+
+        if (errorType === apiErrorTypes.EMAIL_EXISTS) {
+          const errorMessage = e.response?.data?.message ?? "此 Mail 已註冊！";
+          actions.setFieldError("email", errorMessage);
+        } else {
+          console.error(e);
+        }
+      } finally {
         toggleScreenLoading(false);
-      }, 5000);
+      }
     });
 
     return {
