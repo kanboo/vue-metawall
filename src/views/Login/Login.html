@@ -16,18 +16,24 @@
           <div class="mb-8 space-y-4">
             <div class="form-control">
               <label for="userEmail"></label>
-              <input type="mail" class="form-input font-mono" name="userEmail" id="userEmail" placeholder="Email" />
+              <input type="mail" v-model="email" class="form-input font-mono" name="userEmail" placeholder="Email" />
+              <span v-if="errors.email" class="form-errorMsg  register-style">{{ errors.email }}</span>
             </div>
             <div class="form-control">
               <label for="userPassword"></label>
-              <input type="password" class="form-input font-mono" name="userPassword" id="userPassword"
+              <input type="password" v-model="password" class="form-input font-mono" name="userPassword"
                 placeholder="Password" />
+              <span v-if="errors.password" class="form-errorMsg register-style">{{ errors.password }}</span>
             </div>
           </div>
-          <p class="login-style form-errorMsg text-center hidden">
+          <p v-if="isLoginFailed" class="login-style form-errorMsg text-center">
             帳號或密碼錯誤，請重新輸入！
           </p>
-          <button type="button" class="btn btn-primary mb-4 btn-login">登入</button>
+          <button type="button" class="flex justify-center items-center btn btn-primary mb-4 btn-login"
+            :class="getLoginBtnClass" :disabled="isScreenLoading" @click="onSubmit">
+            <span class="mr-2">登入</span>
+            <IconLoading v-show="isScreenLoading" class="h-6 w-6 text-white ml-2" />
+          </button>
           <router-link :to="{ name: 'Register'}" class="block text-center">
             註冊帳號
           </router-link>
