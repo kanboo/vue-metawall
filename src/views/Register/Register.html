@@ -15,23 +15,36 @@
           </legend>
           <div class="mb-8 space-y-4">
             <div class="form-control">
-              <label for="userName"></label>
-              <input type="text" class="form-input" name="userName" id="userName" placeholder="暱稱" />
-              <span class="form-errorMsg hidden register-style">暱稱至少 2 個字元以上</span>
+              <label for="name"></label>
+              <input type="text" v-model="name" class="form-input" name="name" placeholder="Name" />
+              <span v-if="errors.name" class="form-errorMsg register-style">{{ errors.name }}</span>
             </div>
             <div class="form-control">
-              <label for="userEmail"></label>
-              <input type="mail" class="form-input font-mono" name="userEmail" id="userEmail" placeholder="Email" />
-              <span class="form-errorMsg hidden register-style">帳號已被註冊，請替換新的 Email！</span>
+              <label for="email"></label>
+              <input type="mail" v-model="email" class="form-input font-mono" name="email" placeholder="Email"
+                @blur="handleEmailBlur" />
+              <span v-if="errors.email" class="form-errorMsg  register-style">{{ errors.email }}</span>
             </div>
             <div class="form-control">
-              <label for="userPassword"></label>
-              <input type="password" class="form-input font-mono" name="userPassword" id="userPassword"
+              <label for="password"></label>
+              <input type="password" v-model="password" class="form-input font-mono" name="password"
                 placeholder="Password" />
-              <span class="form-errorMsg hidden register-style">密碼需至少 8 碼以上，並中英混合</span>
+              <span v-if="errors.password" class="form-errorMsg register-style">{{ errors.password }}</span>
+            </div>
+            <div class="form-control">
+              <label for="confirmPassword"></label>
+              <input type="password" v-model="confirmPassword" class="form-input font-mono" name="confirmPassword"
+                placeholder="Confirm Password" />
+              <span v-if="errors.confirmPassword" class="form-errorMsg register-style">{{ errors.confirmPassword
+                }}</span>
             </div>
           </div>
-          <button type="button" class="btn btn-primary mb-4 btn-register">註冊</button>
+
+          <button type="button" class="flex justify-center items-center btn btn-primary mb-4 btn-register"
+            :class="getRegisterClass" :disabled="isScreenLoading" @click="onSubmit">
+            <span class="mr-2">註冊</span>
+            <IconLoading v-show="isScreenLoading" class="h-6 w-6 text-white ml-2" />
+          </button>
           <router-link :to="{ name: 'Login'}" class="block text-center">
             登入
           </router-link>
