@@ -30,7 +30,7 @@
           <div class="card" v-for="post in normalizedPosts" :key="post._id">
             <div class="card-body">
               <div class="flex gap-4">
-                <img :src="post.userPhoto" class="max-h-[40px] max-w-[40px]" alt="avatarImage" />
+                <img :src="post.userPhoto" class="w-full h-full max-h-[40px] max-w-[40px]" alt="avatarImage" />
                 <div class="">
                   <p class="font-bold mb-1">{{ post.userName }}</p>
                   <p class="text-xs text-gray-base font-num">{{ post.createdAt }}</p>
