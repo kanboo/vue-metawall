@@ -1,10 +1,14 @@
 import { computed, ref } from "vue";
 
 const user = ref(null);
-const apiToken = ref(localStorage.getItem("api_token") ?? null);
+const apiToken = ref(localStorage.getItem("api_token"));
 
 export const userName = computed(() => {
   return user.value?.name ?? "";
+});
+
+export const userToken = computed(() => {
+  return apiToken.value;
 });
 
 export const isLoggedIn = computed(() => {

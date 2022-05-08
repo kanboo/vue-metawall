@@ -1,7 +1,8 @@
+import axios from "@/plugins/http.js";
 import { createRouter, createWebHistory } from "vue-router";
 import routes from "./routes";
 
-import { isLoggedIn } from "@/store/user";
+import { isLoggedIn, userToken, setUser } from "@/store/user";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -26,6 +27,22 @@ const router = createRouter({
  *  - Router path： 前往該路由
  */
 router.beforeEach(async (to) => {
+  /**
+   * 未登入 & 有 Token => 重新取得 User 資訊
+   * 情境：有可能按 F5 重整頁面
+   */
+  if (!isLoggedIn.value && !!userToken.value) {
+    try {
+      const response = await axios.get("/api/users/profile");
+      setUser(response.data?.data ?? null);
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  /**
+   * 判斷是否需要驗證登入權限
+   */
   const requiresAuth = to.meta?.requiresAuth ?? true;
 
   if (requiresAuth && !isLoggedIn.value) {
