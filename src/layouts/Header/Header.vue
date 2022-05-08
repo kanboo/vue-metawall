@@ -1,5 +1,5 @@
 <script>
-import { userName } from "@/store/user";
+import { userName, userPhoto } from "@/store/user";
 
 export default {
   name: "Header",
@@ -13,6 +13,7 @@ export default {
 
     return {
       userName,
+      userPhoto,
 
       logout,
     };
