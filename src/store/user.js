@@ -3,6 +3,10 @@ import { computed, ref } from "vue";
 const user = ref(null);
 const apiToken = ref(localStorage.getItem("api_token"));
 
+export const userId = computed(() => {
+  return user.value?.id ?? "";
+});
+
 export const userName = computed(() => {
   return user.value?.name ?? "";
 });
@@ -16,8 +20,7 @@ export const isLoggedIn = computed(() => {
 });
 
 export const setUser = (payload) => {
-  const { name, photo } = payload;
-  user.value = { name, photo };
+  user.value = payload;
 };
 
 export const setApiToken = (token) => {

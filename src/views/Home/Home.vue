@@ -7,6 +7,8 @@ import axios from "@/plugins/http.js";
 import SideMenu from "@/components/SideMenu";
 import CardSkeleton from "@/components/CardSkeleton";
 
+const ICON_DEFAULT_USER = "https://api.iconify.design/ri:user-5-line.svg";
+
 const SORT_TYPE = {
   ASC: "asc",
   DESC: "desc",
@@ -34,7 +36,7 @@ export default {
         return {
           ...post,
           userName: post?.user?.name ?? "",
-          userPhoto: post?.user?.photo ?? "",
+          userPhoto: post?.user?.photo || ICON_DEFAULT_USER,
         };
       });
     });
