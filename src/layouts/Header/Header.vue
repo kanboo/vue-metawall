@@ -5,8 +5,16 @@ export default {
   name: "Header",
 
   setup() {
+    const logout = () => {
+      localStorage.removeItem("api_token");
+
+      location.href = "/login";
+    };
+
     return {
       userName,
+
+      logout,
     };
   },
 };
