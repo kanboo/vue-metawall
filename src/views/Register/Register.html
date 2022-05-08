@@ -1,17 +1,17 @@
 <div class="register bg_pattern">
   <div class="container">
-    <section class="flex justify-center items-center min-h-screen">
+    <section class="flex justify-center md:justify-content items-center min-h-screen">
       <div
-        class="border-2 border-black bg-gray flex flex-col md:flex-row justify-between gap-12 shadow-light py-16 px-12">
+        class="border-2 border-black bg-gray flex flex-col md:flex-row justify-between gap-4 sm:gap-12 shadow-light px-4  py-6 md:py-16 md:px-12">
 
         <router-link :to="{ name: 'Home'}" class="self-center flex justify-center items-center md:w-1/3 lg:w-auto">
-          <img src="@/assets/images/img.svg" alt="banner" class="cursor-pointer" />
+          <img src="@/assets/images/img.svg" alt="banner" class="hidden md:block cursor-pointer" />
         </router-link>
 
         <form class="w-full">
           <legend class="mb-9 cursor-pointer">
-            <h1 class="text-center font-logo text-primary text-6xl">MetaWall</h1>
-            <p class="text-center font-bold text-2xl">註冊</p>
+            <h1 class="text-center font-logo text-primary text-4xl md:text-6xl">MetaWall</h1>
+            <p class="text-center font-bold text-xl md:text-2xl">註冊</p>
           </legend>
           <div class="mb-8 space-y-4">
             <div class="form-control">
