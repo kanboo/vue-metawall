@@ -5,7 +5,6 @@ import { useToggle } from "@vueuse/core";
 import axios from "@/plugins/http.js";
 
 import { toggleScreenLoading } from "@/store/screenLoadingStatus";
-import { userId } from "@/store/user";
 
 import SideMenu from "@/components/SideMenu";
 
@@ -51,7 +50,6 @@ export default {
         toggleScreenLoading(true);
 
         const postData = {
-          user: userId.value,
           ...form.value,
         };
 
