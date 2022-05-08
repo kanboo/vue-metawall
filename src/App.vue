@@ -1,21 +1,34 @@
 <script>
-import { RouterView } from "vue-router";
+import { computed, ref, watch } from "vue";
+import { useRoute } from "vue-router";
 
 import ScreenLoading from "@/components/ScreenLoading";
-import Default from "./layouts/Default";
+import HeaderLayout from "@/layouts/Header";
 
-import { isScreenLoading } from "./store/screenLoadingStatus";
+import { isScreenLoading } from "@/store/screenLoadingStatus";
 
 export default {
   components: {
     ScreenLoading,
-    Default,
+    HeaderLayout,
   },
 
   setup() {
+    const route = useRoute();
+
+    const isExcludeLayout = ref(false);
+    watch(
+      () => route.meta,
+      async (meta) => {
+        isExcludeLayout.value = meta?.isExcludeLayout || false;
+      }
+    );
+
+    const isShowLayout = computed(() => !isExcludeLayout.value);
+
     return {
-      RouterView,
       isScreenLoading,
+      isShowLayout,
     };
   },
 };
@@ -23,7 +36,7 @@ export default {
 
 <template>
   <ScreenLoading v-show="isScreenLoading" />
-  <Default />
+  <HeaderLayout v-show="isShowLayout" />
   <RouterView />
 </template>
 

@@ -1,6 +1,15 @@
 <script>
+import { userName, userPhoto } from "@/store/user";
+
 export default {
   name: "SideMenu",
+
+  setup() {
+    return {
+      userName,
+      userPhoto,
+    };
+  },
 };
 </script>
 

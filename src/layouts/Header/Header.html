@@ -1,0 +1,27 @@
+<header class="header py-4 border-b-2 border-black">
+  <div class="container">
+    <nav class="flex justify-between items-center">
+      <router-link :to="{ name: 'Home'}">
+        <h2 class="font-logo text-[26px] leading-9">MetaWall</h2>
+      </router-link>
+      <div class="flex items-center gap-2 relative group cursor-pointer">
+        <img :src="userPhoto" alt="avatarImage" class="w-8 h-8 rounded-full" />
+        <h3 class="font-mono font-bold border-b-2 border-black p-1">{{ userName }}</h3>
+        <div class="absolute top-full right-0 md:left-0 z-10 invisible group-hover:visible">
+          <ul
+            class="mt-2 min-w-[182px] bg-white border-2 border-black flex flex-col divide-y-2 divide-black relative after:w-full after:h-full after:translate-x-[6px] after:translate-y-[6px] after:content-[''] after:absolute after:bg-white after:shadow-[0_0_0_2px_#000400] after:z-[-1]">
+            <!-- <li class="hover:bg-gray">
+              <a href="./personal.html" class="block text-center py-2"> 我的貼文牆 </a>
+            </li> -->
+            <!-- <li class="hover:bg-gray">
+              <a href="./profile.html" class="block text-center py-2">修改個人資料</a>
+            </li> -->
+            <li class="hover:bg-gray">
+              <a class="block text-center py-2" @click="logout">登出</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </div>
+</header>

@@ -7,12 +7,13 @@ axios.defaults.baseURL = import.meta.env.PROD
 
 // Add a request interceptor
 axios.interceptors.request.use(
-  function (config) {
-    // Do something before request is sent
+  (config) => {
+    const token = localStorage.getItem("api_token");
+    if (token) config.headers.common["Authorization"] = `Bearer ${token}`;
+
     return config;
   },
-  function (error) {
-    // Do something with request error
+  (error) => {
     return Promise.reject(error);
   }
 );
