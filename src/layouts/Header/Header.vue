@@ -8,7 +8,7 @@ export default {
     const logout = () => {
       localStorage.removeItem("api_token");
 
-      location.href = "/login";
+      location.reload();
     };
 
     return {
