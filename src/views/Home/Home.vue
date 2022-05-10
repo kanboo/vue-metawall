@@ -46,7 +46,7 @@ export default {
         toggleFetchLoading(true);
 
         const params = search.value;
-        const response = await axios.get("/api/posts", { params });
+        const response = await axios.get("/api/v1/posts", { params });
         posts.value = response.data?.data ?? [];
       } catch (e) {
         console.error(e);

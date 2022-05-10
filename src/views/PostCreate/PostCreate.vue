@@ -34,7 +34,7 @@ export default {
         const file = files[0];
         const fd = new FormData();
         fd.append("image", file, file.name);
-        const response = await axios.post("/api/images", fd);
+        const response = await axios.post("/api/v1/image", fd);
         form.value.image = response.data?.data?.link ?? "";
       } catch (e) {
         console.error(e);
@@ -53,7 +53,7 @@ export default {
           ...form.value,
         };
 
-        await axios.post("/api/posts", postData);
+        await axios.post("/api/v1/post", postData);
 
         router.push({ name: "Home" });
       } catch (e) {
