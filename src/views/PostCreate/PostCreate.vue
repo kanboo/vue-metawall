@@ -4,6 +4,8 @@ import { useRouter } from "vue-router";
 import { useToggle } from "@vueuse/core";
 import axios from "@/plugins/http.js";
 
+import { socket } from "@/plugins/socket";
+
 import { toggleScreenLoading } from "@/store/screenLoadingStatus";
 
 import SideMenu from "@/components/SideMenu";
@@ -53,7 +55,10 @@ export default {
           ...form.value,
         };
 
-        await axios.post("/api/v1/post", postData);
+        const response = await axios.post("/api/v1/post", postData);
+
+        // socket 通知
+        socket.emit("post:create", { id: response.data?.data?.id });
 
         router.push({ name: "Home" });
       } catch (e) {

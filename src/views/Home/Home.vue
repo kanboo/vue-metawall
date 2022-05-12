@@ -59,7 +59,8 @@ export default {
       }
     }, 500);
     watch(search.value, () => getPosts());
-    onPostCreate(() => {
+    onPostCreate((payload) => {
+      console.log("onPostCreate", payload);
       hasNewPosts.value = true;
     });
 
