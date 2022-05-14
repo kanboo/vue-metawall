@@ -19,7 +19,7 @@
 
               <span>上傳圖片</span>
 
-              <input id="image-upload" type="file" class="hidden" @change="onFileChange" />
+              <input id="image-upload" type="file" accept="image/*" class="hidden" @change="onFileChange" />
             </label>
 
             <template v-if="isUploading">

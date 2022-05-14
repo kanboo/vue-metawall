@@ -19,6 +19,11 @@ export default [
     meta: { requiresAuth: false, isExcludeLayout: true },
   },
   {
+    name: "Profile",
+    path: "/profile",
+    component: () => import("@/views/Profile"),
+  },
+  {
     name: "PostCreate",
     path: "/posts/create",
     component: () => import("@/views/PostCreate"),
