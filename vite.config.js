@@ -16,15 +16,5 @@ export default defineConfig(({ mode }) => {
         "@": fileURLToPath(new URL("./src", import.meta.url)),
       },
     },
-    server: {
-      proxy: {
-        "/api": {
-          // eslint-disable-next-line no-undef
-          target: `${process.env.VITE_BACKEND_HOST || "http://localhost:3005/"
-            }/`, // 遠端 URL Domain
-          changeOrigin: true,
-        },
-      },
-    },
   };
 });

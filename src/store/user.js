@@ -5,6 +5,10 @@ const ICON_DEFAULT_USER = "https://api.iconify.design/ri:user-5-line.svg";
 const user = ref(null);
 const apiToken = ref(localStorage.getItem("api_token"));
 
+export const userInfo = computed(() => {
+  return user.value;
+});
+
 export const userId = computed(() => {
   return user.value?.id ?? "";
 });

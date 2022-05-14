@@ -33,7 +33,7 @@ router.beforeEach(async (to) => {
    */
   if (!isLoggedIn.value && !!userToken.value) {
     try {
-      const response = await axios.get("/api/users/profile");
+      const response = await axios.get("/api/v1/user/profile");
       setUser(response.data?.data ?? null);
     } catch (e) {
       console.error(e);

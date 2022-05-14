@@ -27,17 +27,24 @@
           <CardSkeleton v-for="i in 2" />
         </template>
         <template v-else-if="normalizedPosts.length">
-          <div class="card" v-for="post in normalizedPosts" :key="post._id">
-            <div class="card-body">
-              <div class="flex gap-4">
-                <img :src="post.userPhoto" class="w-full h-full max-h-[40px] max-w-[40px]" alt="avatarImage" />
-                <div class="">
-                  <p class="font-bold mb-1">{{ post.userName }}</p>
-                  <p class="text-xs text-gray-base font-num">{{ post.createdAt }}</p>
+          <div class="card-list relative space-y-4">
+            <div v-show="hasNewPosts"
+              class="absolute -top-3 left-0 right-0 mx-auto flex justify-center items-center text-white text-center bg-primary opacity-95 w-32 py-2 rounded-full cursor-pointer"
+              @click="getPosts">
+              <span>載入最新貼文</span>
+            </div>
+            <div class="card" v-for="post in normalizedPosts" :key="post._id">
+              <div class="card-body">
+                <div class="flex gap-4">
+                  <img :src="post.userPhoto" class="w-full h-full max-h-[40px] max-w-[40px]" alt="avatarImage" />
+                  <div class="">
+                    <p class="font-bold mb-1">{{ post.userName }}</p>
+                    <p class="text-xs text-gray-base font-num">{{ post.createdAt }}</p>
+                  </div>
                 </div>
+                <p class="whitespace-pre-line">{{ post.content }}</p>
+                <img v-if="post.image" :src="post.image" class="max-h-[157px] max-w-[485px] object-contain" alt="" />
               </div>
-              <p class="whitespace-pre-line">{{ post.content }}</p>
-              <img v-if="post.image" :src="post.image" class="max-h-[157px] max-w-[485px] object-contain" alt="" />
             </div>
           </div>
         </template>

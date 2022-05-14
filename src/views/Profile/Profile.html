@@ -1,0 +1,101 @@
+<div class="profile bg_pattern">
+  <div class="container py-12 min-h-screen">
+    <section class="flex justify-between items-start gap-7">
+      <div class="flex-auto space-y-4">
+        <div class="relative p-8 z-[1]">
+          <h1
+            class="absolute inset-0 py-4 w-full border-2 border-black bg-white text-center text-xl font-bold after:inset-0 after:w-full after:h-full after:translate-x-[-7px] after:translate-y-[7px] after:content-[''] after:absolute after:bg-white after:border-2 after:border-black after:z-[-1]">
+            修改個人資料
+          </h1>
+        </div>
+        <div>
+          <nav class="px-4 flex">
+            <a class="border-2 border-black border-b-0 rounded-t-lg bg-white py-2 px-6 cursor-pointer"
+              :class="{'bg-black text-white': activeTab === TABES.CHANGE }" @click="changeTab(TABES.CHANGE)">暱稱修改</a>
+            <a class="border-2 border-black border-b-0 rounded-t-lg bg-white py-2 px-6 cursor-pointer"
+              :class="{'bg-black text-white': activeTab === TABES.RESET }" @click="changeTab(TABES.RESET)">重設密碼</a>
+          </nav>
+          <div v-show="activeTab === TABES.CHANGE" id="change" class="card target:block">
+            <div class="flex flex-col space-y-4 p-8">
+              <template v-if="photo">
+                <img :src="photo"
+                  class="mx-auto max-h-[107px] max-w-[107px] object-contain border-2 border-black rounded-full"
+                  alt="user-image" />
+              </template>
+              <template v-else>
+                <img :src="IMG_DEFAULT_USER" class="mx-auto" alt="user-image" />
+              </template>
+
+              <ol v-show="!imageValidated" class="text-danger text-center mb-4 list-decimal">
+                <li>圖片寬高比必需為 1:1，請重新輸入</li>
+                <li>解析度寬度至少 300像素以上，請重新輸入</li>
+              </ol>
+              <label for="image-upload" class="self-center py-1 px-6 bg-black text-white rounded cursor-pointer">
+                <span>上傳圖片</span>
+                <input id="image-upload" type="file" accept="image/*" class="hidden" @change="onFileChange" />
+              </label>
+              <div class="form-control mx-auto space-y-1 w-4/5">
+                <label for="name">暱稱</label>
+                <input v-model="name" type="text" class="form-input py-2 px-6" />
+                <span v-if="userFormErrors.name" class="form-errorMsg register-style">{{ userFormErrors.name }}</span>
+              </div>
+              <div class="form-control mx-auto space-y-1 w-4/5">
+                <h3>性別</h3>
+                <div class="flex gap-6">
+                  <div class="flex items-center gap-3">
+                    <input v-model="gender" :value="GENDER_TYPE.MALE" type="radio" class="h-5 w-5 accent-black"
+                      id="userGenderMale" name="userGender" />
+                    <label for="userGenderMale">男性</label>
+                  </div>
+                  <div class="flex items-center gap-3">
+                    <input v-model="gender" :value="GENDER_TYPE.FEMALE" type="radio" class="h-5 w-5 accent-black"
+                      id="userGenderFemale" name="userGender" />
+                    <label for="userGenderFemale">女性</label>
+                  </div>
+                </div>
+                <span v-if="userFormErrors.gender" class="form-errorMsg register-style">
+                  {{ userFormErrors.gender }}
+                </span>
+              </div>
+              <div class="w-4/5 mx-auto mt-8 group">
+                <button type="button" class="btn bg-secondary hover:bg-primary hover:text-white shadow-side"
+                  @click="onSubmitUserForm">
+                  送出更新
+                </button>
+              </div>
+            </div>
+          </div>
+          <div v-show="activeTab === TABES.RESET" id="reset" class="card target:block">
+            <div class="flex flex-col space-y-4 p-8">
+              <div class="form-control mx-auto space-y-1 w-4/5">
+                <label for="newPassword">輸入新密碼</label>
+                <input v-model="newPassword" id="newPassword" name="newPassword" type="password"
+                  class="form-input py-2 px-6" placeholder="請輸入新密碼" />
+                <span v-if="passwordFormErrors.newPassword" class="form-errorMsg register-style">
+                  {{ passwordFormErrors.newPassword }}
+                </span>
+              </div>
+              <div class="form-control mx-auto space-y-1 w-4/5">
+                <label for="confirmPassword">再次輸入</label>
+                <input v-model="confirmPassword" id="confirmPassword" name="confirmPassword" type="password"
+                  class="form-input py-2 px-6" placeholder="再次輸入新密碼" />
+                <span v-if="passwordFormErrors.confirmPassword" class="form-errorMsg register-style">
+                  {{ passwordFormErrors.confirmPassword }}
+                </span>
+              </div>
+              <div class="w-4/5 mx-auto pt-4">
+                <button type="button" class="btn bg-secondary hover:bg-primary hover:text-white shadow-side"
+                  @click="onSubmitPasswordForm">
+                  重設密碼
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 側邊 Menu -->
+      <SideMenu />
+    </section>
+  </div>
+</div>

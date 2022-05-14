@@ -1,9 +1,7 @@
 import axios from "axios";
 
 // Global axios defaults
-axios.defaults.baseURL = import.meta.env.PROD
-  ? import.meta.env.VITE_BACKEND_HOST
-  : "";
+axios.defaults.baseURL = import.meta.env.VITE_BACKEND_HOST;
 
 // Add a request interceptor
 axios.interceptors.request.use(
