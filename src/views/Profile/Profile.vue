@@ -140,7 +140,7 @@ export default {
       try {
         toggleScreenLoading(true);
 
-        await axios.patch("/api/v1/user/update-password", values);
+        await axios.post("/api/v1/user/update-password", values);
         actions.resetForm();
 
         // router.push({ name: "Home" });
