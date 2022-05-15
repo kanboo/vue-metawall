@@ -33,7 +33,7 @@ export default {
       try {
         toggleUploading(true);
 
-        const file = files[0];
+        const [file] = files;
         const fd = new FormData();
         fd.append("image", file, file.name);
         const response = await axios.post("/api/v1/image", fd);

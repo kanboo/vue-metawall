@@ -64,7 +64,9 @@ export default {
       if (!files.length) return;
 
       try {
-        const file = files[0];
+        const [file] = files;
+
+        // 驗證檔案
         const image = new Image();
         image.src = URL.createObjectURL(file);
 
@@ -79,6 +81,7 @@ export default {
           return;
         }
 
+        // 上傳圖檔 & 取得 Image url
         const fd = new FormData();
         fd.append("image", file, file.name);
         const response = await axios.post("/api/v1/image", fd);
