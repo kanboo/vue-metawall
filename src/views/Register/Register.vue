@@ -86,7 +86,7 @@ export default {
       try {
         toggleScreenLoading(true);
 
-        const response = await axios.post("/api/v1/user/register", values);
+        const response = await axios.post("/api/v1/auth/register", values);
 
         const user = response.data?.data?.user ?? null;
         const token = response.data?.data?.token ?? null;

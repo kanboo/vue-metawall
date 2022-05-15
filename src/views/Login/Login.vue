@@ -69,7 +69,7 @@ export default {
         toggleScreenLoading(true);
         isLoginFailed.value = false;
 
-        const response = await axios.post("/api/v1/user/login", values);
+        const response = await axios.post("/api/v1/auth/login", values);
 
         const user = response.data?.data?.user ?? null;
         const token = response.data?.data?.token ?? null;
