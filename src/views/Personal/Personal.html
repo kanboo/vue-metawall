@@ -1,0 +1,110 @@
+<div class="personal bg_pattern">
+  <div class="container py-12 min-h-screen">
+    <section class="flex justify-between items-start gap-7">
+      <div class="flex-auto space-y-4">
+        <div class="relative p-10 z-[1]">
+          <div
+            class="absolute inset-0 after:inset-0 after:w-full after:h-full after:translate-x-[-7px] after:translate-y-[7px] after:content-[''] after:absolute after:bg-white after:border-2 after:border-black after:z-[-1] after:rounded-lg border-2 border-black rounded-lg bg-white flex justify-between items-center">
+            <div class="border-r-2 border-black h-full flex-[0_0_auto] overflow-hidden">
+              <img :src="normalizedUser.photoDisplay" class="h-20 w-20 object-cover" alt="" />
+            </div>
+            <div class="flex justify-between items-center w-full h-full p-4">
+              <div>
+                <h1 class="font-bold">{{ normalizedUser.name }}</h1>
+                <p>{{ normalizedUser.followCount }} 人追蹤</p>
+              </div>
+              <button v-if="!isSelf" type="button"
+                class="btn bg-secondary group-focus:bg-gray shadow-bottom py-1 px-8 w-auto block group"
+                @click="toggleFollow">
+                <span v-if="isFollowed">取消追蹤</span>
+                <span v-else>追蹤</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 搜尋區 -->
+        <div class="flex flex-col md:flex-row justify-between gap-2 md:gap-3">
+          <div class="form-control">
+            <label for="articleType"></label>
+            <select v-model="search.timeSort" name="articleType" id="articleType"
+              class="py-3 px-4 border-2 border-black h-full focus:outline-none">
+              <option :value="SORT_TYPE.ASC">最舊貼文</option>
+              <option :value="SORT_TYPE.DESC">最新貼文</option>
+            </select>
+          </div>
+          <div class="input-group w-full">
+            <label for="searchInput"></label>
+            <input v-model="search.keyword" type="text" id="searchInput" name="searchInput" placeholder="搜尋貼文"
+              class="w-full py-3 pl-4 border-2 border-black focus-visible:outline-none" />
+            <button type="button" class="bg-primary btn-square text-white border-2 border-l-0 border-black p-3">
+              <i class="fa-solid fa-magnifying-glass text-xl"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- 貼文區 -->
+        <template v-if="isFetchLoading">
+          <CardSkeleton v-for="i in 2" />
+        </template>
+        <template v-else-if="normalizedPosts.length">
+          <div class="card-list relative space-y-4">
+            <div v-show="hasNewPosts"
+              class="absolute -top-3 left-0 right-0 mx-auto flex justify-center items-center text-white text-center bg-primary opacity-95 w-32 py-2 rounded-full cursor-pointer"
+              @click="getPosts">
+              <span>載入最新貼文</span>
+            </div>
+            <div class="card" v-for="post in normalizedPosts" :key="post._id">
+              <div class="card-body">
+                <!-- User 資訊 -->
+                <div class="flex gap-4">
+                  <img :src="post.userPhoto" class="w-full h-full max-h-[40px] max-w-[40px] rounded-full"
+                    alt="avatarImage" />
+                  <div class="">
+                    <p class="font-bold mb-1">{{ post.userName }}</p>
+                    <p class="text-xs text-gray-base font-num">{{ post.createdAtDisplay }}</p>
+                  </div>
+                </div>
+
+                <!-- 文章內容 -->
+                <p class="whitespace-pre-line">{{ post.content }}</p>
+                <img v-if="post.image" :src="post.image" class="max-h-[157px] max-w-[485px] object-contain" alt="" />
+
+                <!-- 點讚數 -->
+                <div class="flex items-center gap-2">
+                  <div v-if="post.likeCount" class="cursor-pointer" @click="toggleLike(post._id)">
+                    <i class="fa-regular fa-thumbs-up text-primary mr-2"></i>
+                    <span class="font-num text-xs">{{ post.likeCount }}</span>
+                  </div>
+                  <div v-else class="cursor-pointer" @click="toggleLike(post._id)">
+                    <i class="fa-regular fa-thumbs-up text-gray-base mr-2"></i>
+                    <span class="text-gray-base">成為第一個按讚的朋友</span>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </template>
+        <template v-else>
+          <div class="card">
+            <div class="card-header">
+              <div class="flex gap-[6px] p-4 border-b-2 border-black">
+                <div class="bg-danger-dark rounded-full h-2 w-2 border border-[#707070]"></div>
+                <div class="bg-warning rounded-full h-2 w-2 border border-[#707070]"></div>
+                <div class="bg-accent rounded-full h-2 w-2 border border-[#707070]"></div>
+              </div>
+            </div>
+            <div class="card-bdoy p-8">
+              <p class="text-center text-gray-base">目前尚無動態，新增一則貼文吧！</p>
+            </div>
+          </div>
+        </template>
+      </div>
+
+      <!-- 側邊 Menu -->
+      <SideMenu />
+
+    </section>
+  </div>
+</div>

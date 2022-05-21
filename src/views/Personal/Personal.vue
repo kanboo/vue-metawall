@@ -1,0 +1,183 @@
+<script>
+import { computed, ref, watch } from "vue";
+import { useRoute } from "vue-router";
+import { useToggle, useDebounceFn } from "@vueuse/core";
+import { format } from "date-fns";
+
+import axios from "@/plugins/http.js";
+
+import { userInfo } from "@/store/user";
+import { toggleScreenLoading } from "@/store/screenLoadingStatus";
+
+import SideMenu from "@/components/SideMenu";
+import CardSkeleton from "@/components/CardSkeleton";
+
+const ICON_DEFAULT_USER = "https://api.iconify.design/ri:user-5-line.svg";
+
+const SORT_TYPE = {
+  ASC: "asc",
+  DESC: "desc",
+};
+
+export default {
+  name: "Personal",
+  components: { SideMenu, CardSkeleton },
+
+  setup() {
+    const route = useRoute();
+
+    const userId = route.params?.personalId || userInfo.value.id;
+    const user = ref(null);
+
+    const isSelf = computed(() => userInfo.value?.id === user.value?.id);
+    const normalizedUser = computed(() => {
+      return {
+        ...user.value,
+        photoDisplay: user.value?.photo || ICON_DEFAULT_USER,
+        followCount: user.value?.follows?.length ?? 0,
+      };
+    });
+    const isFollowed = computed(() => {
+      return (
+        user.value?.follows.some((id) => id === userInfo.value?.id) ?? false
+      );
+    });
+
+    const toggleFollow = async () => {
+      try {
+        toggleScreenLoading(true);
+
+        const response = await axios({
+          method: isFollowed.value ? "delete" : "post",
+          url: `/api/v1/user/follow/${userId}`,
+        });
+
+        user.value = response.data?.data ?? null;
+      } catch (e) {
+        console.error(e);
+      } finally {
+        toggleScreenLoading(false);
+      }
+    };
+
+    const search = ref({
+      user: userId,
+      timeSort: SORT_TYPE.DESC,
+      keyword: "",
+    });
+    const posts = ref([]);
+
+    const hasNewPosts = ref(false);
+    const [isFetchLoading, toggleFetchLoading] = useToggle(true);
+
+    const normalizedPosts = computed(() => {
+      return posts.value.map((post) => {
+        return {
+          ...post,
+          userName: post?.user?.name ?? "",
+          userPhoto: post?.user?.photo || ICON_DEFAULT_USER,
+          createdAtDisplay: format(
+            new Date(post.createdAt),
+            "yyyy-MM-dd HH:mm"
+          ),
+          likeCount: post?.likes?.length ?? 0,
+        };
+      });
+    });
+
+    const getUser = async () => {
+      try {
+        const response = await axios.get(`/api/v1/user/profile/${userId}`);
+        user.value = response.data?.data ?? null;
+      } catch (e) {
+        console.error(e);
+      }
+    };
+
+    const getPosts = useDebounceFn(async () => {
+      try {
+        toggleFetchLoading(true);
+
+        const params = search.value;
+        const response = await axios.get("/api/v1/posts", { params });
+        posts.value = response.data?.data ?? [];
+        hasNewPosts.value = false;
+      } catch (e) {
+        console.error(e);
+      } finally {
+        toggleFetchLoading(false);
+      }
+    }, 500);
+    watch(search.value, () => getPosts());
+
+    const updatePostLike = useDebounceFn(async (isLike, postId) => {
+      try {
+        const updatePost = await axios({
+          method: isLike ? "post" : "delete",
+          url: `/api/v1/post/${postId}/like`,
+        });
+
+        const postIndex = posts.value.findIndex(
+          (post) => post._id === updatePost._id
+        );
+
+        if (postIndex !== -1) {
+          posts.value.splice(postIndex, 1, updatePost);
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    }, 1000);
+
+    const toggleLike = (postId) => {
+      const postIndex = posts.value.findIndex((post) => post._id === postId);
+
+      if (postIndex === -1) {
+        return;
+      }
+
+      const userId = userInfo.value.id;
+      const matchPost = posts.value[postIndex];
+      const likeIdx = matchPost.likes.findIndex((id) => id === userId);
+
+      if (likeIdx === -1) {
+        matchPost.likes.push(userId);
+        updatePostLike(true, postId);
+      } else {
+        matchPost.likes.splice(likeIdx, 1);
+        updatePostLike(false, postId);
+      }
+    };
+
+    const init = async () => {
+      try {
+        await getUser();
+        await getPosts();
+      } catch (e) {
+        console.error(e);
+      }
+    };
+
+    init();
+
+    return {
+      isSelf,
+      normalizedUser,
+      isFollowed,
+      toggleFollow,
+
+      SORT_TYPE,
+      search,
+      hasNewPosts,
+      isFetchLoading,
+      normalizedPosts,
+
+      getPosts,
+      toggleLike,
+    };
+  },
+};
+</script>
+
+<template src="./Personal.html"></template>
+<style lang="scss" src="./Personal.scss" scoped></style>
