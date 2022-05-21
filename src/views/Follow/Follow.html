@@ -1,0 +1,53 @@
+<div class="follow bg_pattern">
+  <div class="container py-12 min-h-screen">
+    <section class="flex justify-between items-start gap-7">
+      <div class="flex-auto space-y-4">
+        <div class="relative p-8 z-[1]">
+          <h1
+            class="absolute inset-0 py-4 w-full border-2 border-black bg-white text-center text-xl font-bold after:inset-0 after:w-full after:h-full after:translate-x-[-7px] after:translate-y-[7px] after:content-[''] after:absolute after:bg-white after:border-2 after:border-black after:z-[-1]">
+            追蹤名單
+          </h1>
+        </div>
+        <div class="card group" v-for="user in normalizedUsers" :key="user._id">
+          <div class="card-body">
+            <div class="flex justify-between items-center">
+              <div class="flex gap-4">
+                <img :src="user.photoDisplay" class="w-full h-full max-h-[40px] max-w-[40px] rounded-full"
+                  alt="avatarImage" />
+                <div class="">
+                  <a @click="goPersonalPage(user._id)"
+                    class="font-bold mb-1 cursor-pointer hover:text-primary hover:border-b hover:border-primary">
+                    {{ user.name }}
+                  </a>
+                  <p class="text-xs text-gray-base font-num">您已追蹤 90 天！</p>
+                </div>
+              </div>
+              <p class="text-sm">追蹤時間：<span class="font-num">2022/2/14 12:00</span></p>
+            </div>
+          </div>
+        </div>
+        <div class="card group">
+          <div class="card-body">
+            <div class="flex justify-between items-center">
+              <div class="flex gap-4">
+                <img src="@/assets/images/user3.png" class="h-[40px] w-[40px]" alt="avatarImage" />
+                <div class="">
+                  <p class="font-bold mb-1 group-hover:text-primary group-hover:border-b group-hover:border-primary">
+                    梅琳娜
+                  </p>
+                  <p class="text-xs text-gray-base font-num">您已追蹤 90 天！</p>
+                </div>
+              </div>
+              <p class="text-sm">追蹤時間：<span class="font-num">2022/2/14 12:00</span></p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- 側邊 Menu -->
+      <SideMenu />
+
+    </section>
+  </div>
+</div>
