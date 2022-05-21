@@ -6,19 +6,19 @@
       <i class="fa-solid fa-plus text-white md:hidden"></i>
       <span class="hidden md:block">張貼動態</span>
     </router-link>
-    <router-link :to="{ name: 'Profile'}" class="flex justify-start items-center gap-4 group">
+    <router-link :to="{ name: 'Personal'}" class="flex justify-start items-center gap-4 group">
       <div class="icon-circle bg-white md:bg-info group-hover:md:bg-primary md:hidden">
         <i class="fa-solid fa-house text-xl group-hover:text-white"></i>
       </div>
       <img :src="userPhoto" alt="" class="icon-circle w-[50px] h-[50px] p-0 hidden md:block rounded-full" />
       <span class="hidden md:block font-bold">{{ userName }}</span>
     </router-link>
-    <a href="" class="flex justify-start items-center gap-4 group">
+    <router-link :to="{ name: 'Follow'}" class="flex justify-start items-center gap-4 group">
       <div class="icon-circle bg-white md:bg-info group-hover:md:bg-primary">
         <i class="fa-regular fa-bell text-xl group-hover:text-white"></i>
       </div>
       <span class="hidden md:block font-bold">追蹤名單</span>
-    </a>
+    </router-link>
     <router-link :to="{ name: 'Likes'}" class="flex justify-start items-center gap-4 group">
       <div class="icon-circle bg-white md:bg-info group-hover:md:bg-primary">
         <i class="fa-regular fa-thumbs-up text-xl group-hover:text-white"></i>

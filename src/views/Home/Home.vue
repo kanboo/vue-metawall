@@ -1,5 +1,6 @@
 <script>
 import { computed, ref, watch } from "vue";
+import { useRouter } from "vue-router";
 import { useToggle, useDebounceFn } from "@vueuse/core";
 import { format } from "date-fns";
 
@@ -111,6 +112,11 @@ export default {
       }
     };
 
+    const router = useRouter();
+    const goPersonalPage = (userId) => {
+      router.push({ name: "Personal", params: { personalId: userId } });
+    };
+
     const init = async () => {
       try {
         await getPosts();
@@ -131,6 +137,7 @@ export default {
 
       getPosts,
       toggleLike,
+      goPersonalPage,
     };
   },
 };

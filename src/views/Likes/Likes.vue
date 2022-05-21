@@ -1,5 +1,6 @@
 <script>
 import { ref, computed } from "vue";
+import { useRouter } from "vue-router";
 import { useDebounceFn } from "@vueuse/core";
 import { format } from "date-fns";
 
@@ -62,11 +63,19 @@ export default {
       }
     };
 
+    const router = useRouter();
+    const goPersonalPage = (userId) => {
+      router.push({ name: "Personal", params: { personalId: userId } });
+    };
+
+    // INIT ********************************************************************
     getLikePosts();
+    // INIT ********************************************************************
 
     return {
       normalizedPosts,
       removeLikePost,
+      goPersonalPage,
     };
   },
 };

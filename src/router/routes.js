@@ -24,6 +24,16 @@ export default [
     component: () => import("@/views/Profile"),
   },
   {
+    name: "Personal",
+    path: "/Personal/:personalId?",
+    component: () => import("@/views/Personal"),
+  },
+  {
+    name: "Follow",
+    path: "/Follow",
+    component: () => import("@/views/Follow"),
+  },
+  {
     name: "Likes",
     path: "/likes",
     component: () => import("@/views/Likes"),

@@ -12,7 +12,6 @@
           <div class="card-body py-4 pl-4 pr-10">
             <div class="flex justify-between items-center">
               <div class="flex gap-4 flex-1">
-                <!-- <img src="@/assets/images/user2.png" class="h-10 w-10" alt="avatarImage" /> -->
                 <img :src="post.userPhoto" class="w-full h-full max-h-[40px] max-w-[40px] rounded-full"
                   alt="avatarImage" />
                 <div class="">
@@ -27,7 +26,7 @@
                   <i class="fa-regular fa-thumbs-up text-primary text-2xl"></i>
                   <span class="block">取消</span>
                 </button>
-                <button type="button">
+                <button type="button" @click="goPersonalPage(post.user._id)">
                   <i class="fa-regular fa-circle-right text-2xl"></i>
                   <span class="block">查看</span>
                 </button>

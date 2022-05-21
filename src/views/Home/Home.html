@@ -40,7 +40,10 @@
                   <img :src="post.userPhoto" class="w-full h-full max-h-[40px] max-w-[40px] rounded-full"
                     alt="avatarImage" />
                   <div class="">
-                    <p class="font-bold mb-1">{{ post.userName }}</p>
+                    <a @click="goPersonalPage(post.user._id)"
+                      class="font-bold mb-1 cursor-pointer hover:text-primary hover:border-b hover:border-primary">
+                      {{ post.userName }}
+                    </a>
                     <p class="text-xs text-gray-base font-num">{{ post.createdAtDisplay }}</p>
                   </div>
                 </div>
