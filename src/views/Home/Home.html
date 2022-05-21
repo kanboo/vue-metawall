@@ -35,15 +35,32 @@
             </div>
             <div class="card" v-for="post in normalizedPosts" :key="post._id">
               <div class="card-body">
+                <!-- User 資訊 -->
                 <div class="flex gap-4">
-                  <img :src="post.userPhoto" class="w-full h-full max-h-[40px] max-w-[40px]" alt="avatarImage" />
+                  <img :src="post.userPhoto" class="w-full h-full max-h-[40px] max-w-[40px] rounded-full"
+                    alt="avatarImage" />
                   <div class="">
                     <p class="font-bold mb-1">{{ post.userName }}</p>
                     <p class="text-xs text-gray-base font-num">{{ post.createdAt }}</p>
                   </div>
                 </div>
+
+                <!-- 文章內容 -->
                 <p class="whitespace-pre-line">{{ post.content }}</p>
                 <img v-if="post.image" :src="post.image" class="max-h-[157px] max-w-[485px] object-contain" alt="" />
+
+                <!-- 點讚數 -->
+                <div class="flex items-center gap-2">
+                  <div v-if="post.likeCount" class="cursor-pointer" @click="toggleLike(post._id)">
+                    <i class="fa-regular fa-thumbs-up text-primary mr-2"></i>
+                    <span class="font-num text-xs">{{ post.likeCount }}</span>
+                  </div>
+                  <div v-else class="cursor-pointer" @click="toggleLike(post._id)">
+                    <i class="fa-regular fa-thumbs-up text-gray-base mr-2"></i>
+                    <span class="text-gray-base">成為第一個按讚的朋友</span>
+                  </div>
+                </div>
+
               </div>
             </div>
           </div>

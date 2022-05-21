@@ -5,6 +5,8 @@ import { useToggle, useDebounceFn } from "@vueuse/core";
 import axios from "@/plugins/http.js";
 import { socket, useSocketHook } from "@/plugins/socket";
 
+import { userInfo } from "@/store/user";
+
 import SideMenu from "@/components/SideMenu";
 import CardSkeleton from "@/components/CardSkeleton";
 
@@ -39,6 +41,7 @@ export default {
           ...post,
           userName: post?.user?.name ?? "",
           userPhoto: post?.user?.photo || ICON_DEFAULT_USER,
+          likeCount: post?.likes?.length ?? 0,
         };
       });
     });
@@ -64,6 +67,47 @@ export default {
       hasNewPosts.value = true;
     });
 
+    const updatePostLike = useDebounceFn(async (isLike, postId) => {
+      try {
+        const updatePost = await axios({
+          method: isLike ? "post" : "delete",
+          url: `/api/v1/post/${postId}/like`,
+        });
+
+        const postIndex = posts.value.findIndex(
+          (post) => post._id === updatePost._id
+        );
+
+        if (postIndex === -1) {
+          return;
+        }
+
+        posts.value.splice(postIndex, 1, updatePost);
+      } catch (e) {
+        console.error(e);
+      }
+    }, 1000);
+
+    const toggleLike = (postId) => {
+      const postIndex = posts.value.findIndex((post) => post._id === postId);
+
+      if (postIndex === -1) {
+        return;
+      }
+
+      const userId = userInfo.value.id;
+      const matchPost = posts.value[postIndex];
+      const likeIdx = matchPost.likes.findIndex((id) => id === userId);
+
+      if (likeIdx === -1) {
+        matchPost.likes.push(userId);
+        updatePostLike(true, postId);
+      } else {
+        matchPost.likes.splice(likeIdx, 1);
+        updatePostLike(false, postId);
+      }
+    };
+
     const init = async () => {
       try {
         await getPosts();
@@ -83,6 +127,7 @@ export default {
       normalizedPosts,
 
       getPosts,
+      toggleLike,
     };
   },
 };
