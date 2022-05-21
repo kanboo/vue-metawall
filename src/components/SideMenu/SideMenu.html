@@ -19,11 +19,11 @@
       </div>
       <span class="hidden md:block font-bold">追蹤名單</span>
     </a>
-    <a href="" class="flex justify-start items-center gap-4 group">
+    <router-link :to="{ name: 'Likes'}" class="flex justify-start items-center gap-4 group">
       <div class="icon-circle bg-white md:bg-info group-hover:md:bg-primary">
         <i class="fa-regular fa-thumbs-up text-xl group-hover:text-white"></i>
       </div>
       <span class="hidden md:block font-bold">我按讚的文章</span>
-    </a>
+    </router-link>
   </nav>
 </div>

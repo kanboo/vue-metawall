@@ -1,0 +1,45 @@
+<div class="likes bg_pattern">
+  <div class="container py-12 min-h-screen">
+    <section class="flex justify-between items-start gap-7">
+      <div class="flex-auto space-y-4">
+        <div class="relative p-8 z-[1]">
+          <h1
+            class="absolute inset-0 py-4 w-full border-2 border-black bg-white text-center text-xl font-bold after:inset-0 after:w-full after:h-full after:translate-x-[-7px] after:translate-y-[7px] after:content-[''] after:absolute after:bg-white after:border-2 after:border-black after:z-[-1]">
+            我按讚的貼文
+          </h1>
+        </div>
+        <div class="card" v-for="post in normalizedPosts" :key="post._id">
+          <div class="card-body py-4 pl-4 pr-10">
+            <div class="flex justify-between items-center">
+              <div class="flex gap-4 flex-1">
+                <!-- <img src="@/assets/images/user2.png" class="h-10 w-10" alt="avatarImage" /> -->
+                <img :src="post.userPhoto" class="w-full h-full max-h-[40px] max-w-[40px] rounded-full"
+                  alt="avatarImage" />
+                <div class="">
+                  <p class="font-bold mb-1">{{ post.userName }}</p>
+                  <p class="text-xs text-gray-base font-num">
+                    發文時間： <span class="font-num">{{ post.createdAtDisplay }}</span>
+                  </p>
+                </div>
+              </div>
+              <div class="flex gap-9">
+                <button type="button" @click="removeLikePost(post._id)">
+                  <i class="fa-regular fa-thumbs-up text-primary text-2xl"></i>
+                  <span class="block">取消</span>
+                </button>
+                <button type="button">
+                  <i class="fa-regular fa-circle-right text-2xl"></i>
+                  <span class="block">查看</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 側邊 Menu -->
+      <SideMenu />
+
+    </section>
+  </div>
+</div>

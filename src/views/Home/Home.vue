@@ -1,6 +1,7 @@
 <script>
 import { computed, ref, watch } from "vue";
 import { useToggle, useDebounceFn } from "@vueuse/core";
+import { format } from "date-fns";
 
 import axios from "@/plugins/http.js";
 import { socket, useSocketHook } from "@/plugins/socket";
@@ -41,6 +42,10 @@ export default {
           ...post,
           userName: post?.user?.name ?? "",
           userPhoto: post?.user?.photo || ICON_DEFAULT_USER,
+          createdAtDisplay: format(
+            new Date(post.createdAt),
+            "yyyy-MM-dd HH:mm"
+          ),
           likeCount: post?.likes?.length ?? 0,
         };
       });
@@ -78,11 +83,9 @@ export default {
           (post) => post._id === updatePost._id
         );
 
-        if (postIndex === -1) {
-          return;
+        if (postIndex !== -1) {
+          posts.value.splice(postIndex, 1, updatePost);
         }
-
-        posts.value.splice(postIndex, 1, updatePost);
       } catch (e) {
         console.error(e);
       }

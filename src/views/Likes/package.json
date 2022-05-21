@@ -1,0 +1,6 @@
+{
+  "name": "Likes",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./Likes.vue"
+}

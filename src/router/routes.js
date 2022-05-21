@@ -24,6 +24,11 @@ export default [
     component: () => import("@/views/Profile"),
   },
   {
+    name: "Likes",
+    path: "/likes",
+    component: () => import("@/views/Likes"),
+  },
+  {
     name: "PostCreate",
     path: "/posts/create",
     component: () => import("@/views/PostCreate"),
