@@ -26,10 +26,10 @@ export default {
   setup() {
     const route = useRoute();
 
-    const userId = route.params?.personalId || userInfo.value.id;
+    const userId = route.params?.personalId || userInfo.value._id;
     const user = ref(null);
 
-    const isSelf = computed(() => userInfo.value?.id === user.value?.id);
+    const isSelf = computed(() => userInfo.value._id === user.value?._id);
     const normalizedUser = computed(() => {
       return {
         ...user.value,
@@ -40,7 +40,7 @@ export default {
     const isFollowing = computed(() => {
       return (
         user.value?.followers.some((follower) => {
-          return follower.user._id === userInfo.value?.id;
+          return follower.user._id === userInfo.value._id;
         }) ?? false
       );
     });
@@ -138,7 +138,7 @@ export default {
         return;
       }
 
-      const userId = userInfo.value.id;
+      const userId = userInfo.value._id;
       const matchPost = posts.value[postIndex];
       const likeIdx = matchPost.likes.findIndex((id) => id === userId);
 

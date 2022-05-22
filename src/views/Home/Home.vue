@@ -99,7 +99,7 @@ export default {
         return;
       }
 
-      const userId = userInfo.value.id;
+      const userId = userInfo.value._id;
       const matchPost = posts.value[postIndex];
       const likeIdx = matchPost.likes.findIndex((id) => id === userId);
 

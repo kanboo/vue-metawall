@@ -10,7 +10,7 @@ export const userInfo = computed(() => {
 });
 
 export const userId = computed(() => {
-  return user.value?.id ?? "";
+  return user.value?._id ?? "";
 });
 
 export const userName = computed(() => {
