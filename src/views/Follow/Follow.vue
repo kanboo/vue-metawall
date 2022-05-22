@@ -1,6 +1,7 @@
 <script>
 import { ref, computed } from "vue";
 import { useRouter } from "vue-router";
+import { format, formatDistanceToNowStrict } from "date-fns";
 
 import axios from "@/plugins/http.js";
 
@@ -22,6 +23,15 @@ export default {
         return {
           ...user,
           photoDisplay: user?.photo || ICON_DEFAULT_USER,
+          createdAtDisplay: format(
+            new Date(user.createdAt),
+            "yyyy/MM/dd HH:mm"
+          ),
+          trackedDays:
+            formatDistanceToNowStrict(new Date(user.createdAt), {
+              unit: "day",
+              roundingMethod: "ceil",
+            })?.split(" ")?.[0] ?? 0,
         };
       });
     });
@@ -30,7 +40,7 @@ export default {
       try {
         toggleScreenLoading(true);
 
-        const response = await axios.get("/api/v1/user/follow-list");
+        const response = await axios.get("/api/v1/user/following-list");
         users.value = response.data?.data ?? [];
       } catch (e) {
         console.error(e);

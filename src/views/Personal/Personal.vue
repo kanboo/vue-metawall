@@ -34,12 +34,14 @@ export default {
       return {
         ...user.value,
         photoDisplay: user.value?.photo || ICON_DEFAULT_USER,
-        followCount: user.value?.follows?.length ?? 0,
+        followCount: user.value?.followers?.length ?? 0,
       };
     });
-    const isFollowed = computed(() => {
+    const isFollowing = computed(() => {
       return (
-        user.value?.follows.some((id) => id === userInfo.value?.id) ?? false
+        user.value?.followers.some((follower) => {
+          return follower.user._id === userInfo.value?.id;
+        }) ?? false
       );
     });
 
@@ -47,12 +49,12 @@ export default {
       try {
         toggleScreenLoading(true);
 
-        const response = await axios({
-          method: isFollowed.value ? "delete" : "post",
-          url: `/api/v1/user/follow/${userId}`,
+        await axios({
+          method: isFollowing.value ? "delete" : "post",
+          url: `/api/v1/user/${userId}/follow`,
         });
 
-        user.value = response.data?.data ?? null;
+        await getUser();
       } catch (e) {
         console.error(e);
       } finally {
@@ -163,7 +165,7 @@ export default {
     return {
       isSelf,
       normalizedUser,
-      isFollowed,
+      isFollowing,
       toggleFollow,
 
       SORT_TYPE,

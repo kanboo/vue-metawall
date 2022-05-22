@@ -19,26 +19,10 @@
                     class="font-bold mb-1 cursor-pointer hover:text-primary hover:border-b hover:border-primary">
                     {{ user.name }}
                   </a>
-                  <p class="text-xs text-gray-base font-num">您已追蹤 90 天！</p>
+                  <p class="text-xs text-gray-base font-num">您已追蹤 {{ user.trackedDays }} 天！</p>
                 </div>
               </div>
-              <p class="text-sm">追蹤時間：<span class="font-num">2022/2/14 12:00</span></p>
-            </div>
-          </div>
-        </div>
-        <div class="card group">
-          <div class="card-body">
-            <div class="flex justify-between items-center">
-              <div class="flex gap-4">
-                <img src="@/assets/images/user3.png" class="h-[40px] w-[40px]" alt="avatarImage" />
-                <div class="">
-                  <p class="font-bold mb-1 group-hover:text-primary group-hover:border-b group-hover:border-primary">
-                    梅琳娜
-                  </p>
-                  <p class="text-xs text-gray-base font-num">您已追蹤 90 天！</p>
-                </div>
-              </div>
-              <p class="text-sm">追蹤時間：<span class="font-num">2022/2/14 12:00</span></p>
+              <p class="text-sm">追蹤時間：<span class="font-num">{{ user.createdAtDisplay }}</span></p>
             </div>
           </div>
         </div>
