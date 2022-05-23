@@ -1,6 +1,6 @@
 <script>
 import { computed, ref, watch } from "vue";
-import { useRoute } from "vue-router";
+import { useRoute, onBeforeRouteUpdate } from "vue-router";
 import { useToggle, useDebounceFn } from "@vueuse/core";
 import { format } from "date-fns";
 
@@ -26,7 +26,8 @@ export default {
   setup() {
     const route = useRoute();
 
-    const userId = route.params?.personalId || userInfo.value._id;
+    // User ********************************************************************
+    const userId = ref(route.params?.personalId || userInfo.value._id);
     const user = ref(null);
 
     const isSelf = computed(() => userInfo.value._id === user.value?._id);
@@ -51,7 +52,7 @@ export default {
 
         await axios({
           method: isFollowing.value ? "delete" : "post",
-          url: `/api/v1/user/${userId}/follow`,
+          url: `/api/v1/user/${userId.value}/follow`,
         });
 
         await getUser();
@@ -61,9 +62,20 @@ export default {
         toggleScreenLoading(false);
       }
     };
+    const getUser = async () => {
+      try {
+        const response = await axios.get(
+          `/api/v1/user/profile/${userId.value}`
+        );
+        user.value = response.data?.data ?? null;
+      } catch (e) {
+        console.error(e);
+      }
+    };
+    // User ********************************************************************
 
+    // 貼文 *********************************************************************
     const search = ref({
-      user: userId,
       timeSort: SORT_TYPE.DESC,
       keyword: "",
     });
@@ -87,20 +99,14 @@ export default {
       });
     });
 
-    const getUser = async () => {
-      try {
-        const response = await axios.get(`/api/v1/user/profile/${userId}`);
-        user.value = response.data?.data ?? null;
-      } catch (e) {
-        console.error(e);
-      }
-    };
-
     const getPosts = useDebounceFn(async () => {
       try {
         toggleFetchLoading(true);
 
-        const params = search.value;
+        const params = {
+          ...search.value,
+          user: userId.value,
+        };
         const response = await axios.get("/api/v1/posts", { params });
         posts.value = response.data?.data ?? [];
         hasNewPosts.value = false;
@@ -111,7 +117,9 @@ export default {
       }
     }, 500);
     watch(search.value, () => getPosts());
+    // 貼文 *********************************************************************
 
+    // 按讚 *********************************************************************
     const updatePostLike = useDebounceFn(async (isLike, postId) => {
       try {
         const updatePost = await axios({
@@ -150,6 +158,7 @@ export default {
         updatePostLike(false, postId);
       }
     };
+    // 按讚 *********************************************************************
 
     const init = async () => {
       try {
@@ -159,6 +168,14 @@ export default {
         console.error(e);
       }
     };
+
+    onBeforeRouteUpdate(async (to, from) => {
+      if (to.params.personalId !== from.params.personalId) {
+        toggleFetchLoading(true);
+        userId.value = to.params?.personalId || userInfo.value._id;
+        init();
+      }
+    });
 
     init();
 
