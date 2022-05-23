@@ -28,6 +28,7 @@ export default {
   },
 
   setup() {
+    // 貼文 *********************************************************************
     const search = ref({
       timeSort: SORT_TYPE.DESC,
       keyword: "",
@@ -72,7 +73,9 @@ export default {
       console.log("onPostCreate", payload);
       hasNewPosts.value = true;
     });
+    // 貼文 *********************************************************************
 
+    // 按讚 *********************************************************************
     const updatePostLike = useDebounceFn(async (isLike, postId) => {
       try {
         const updatePost = await axios({
@@ -111,7 +114,9 @@ export default {
         updatePostLike(false, postId);
       }
     };
+    // 按讚 *********************************************************************
 
+    // 前往個人頁
     const router = useRouter();
     const goPersonalPage = (userId) => {
       router.push({ name: "Personal", params: { personalId: userId } });

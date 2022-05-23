@@ -63,6 +63,7 @@ export default {
       }
     };
 
+    // 前往個人頁
     const router = useRouter();
     const goPersonalPage = (userId) => {
       router.push({ name: "Personal", params: { personalId: userId } });
