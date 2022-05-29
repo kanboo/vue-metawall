@@ -9,7 +9,6 @@ export default defineConfig(({ mode }) => {
   process.env = { ...process.env, ...loadEnv(mode, process.cwd()) };
 
   return {
-    base: process.env.NODE_ENV === "production" ? "/vue-metawall/" : "./",
     plugins: [vue()],
     resolve: {
       alias: {
