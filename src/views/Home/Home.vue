@@ -7,10 +7,11 @@ import { format } from "date-fns";
 import axios from "@/plugins/http.js";
 import { socket, useSocketHook } from "@/plugins/socket";
 
-import { userInfo } from "@/store/user";
+import { userId } from "@/store/user";
 
 import SideMenu from "@/components/SideMenu";
 import CardSkeleton from "@/components/CardSkeleton";
+import InputComment from "@/components/InputComment";
 
 const ICON_DEFAULT_USER = "https://api.iconify.design/ri:user-5-line.svg";
 
@@ -25,6 +26,7 @@ export default {
   components: {
     SideMenu,
     CardSkeleton,
+    InputComment,
   },
 
   setup() {
@@ -40,8 +42,22 @@ export default {
 
     const normalizedPosts = computed(() => {
       return posts.value.map((post) => {
+        const comments = post.comments.map((item) => {
+          return {
+            _id: item._id,
+            userName: item.user.name,
+            userPhoto: item.user.photo,
+            comment: item.comment,
+            createdAtDisplay: format(
+              new Date(item.createdAt),
+              "yyyy-MM-dd HH:mm"
+            ),
+          };
+        });
+
         return {
           ...post,
+          comments,
           userName: post?.user?.name ?? "",
           userPhoto: post?.user?.photo || ICON_DEFAULT_USER,
           createdAtDisplay: format(
@@ -102,12 +118,11 @@ export default {
         return;
       }
 
-      const userId = userInfo.value._id;
       const matchPost = posts.value[postIndex];
-      const likeIdx = matchPost.likes.findIndex((id) => id === userId);
+      const likeIdx = matchPost.likes.findIndex((id) => id === userId.value);
 
       if (likeIdx === -1) {
-        matchPost.likes.push(userId);
+        matchPost.likes.push(userId.value);
         updatePostLike(true, postId);
       } else {
         matchPost.likes.splice(likeIdx, 1);
@@ -116,10 +131,22 @@ export default {
     };
     // 按讚 *********************************************************************
 
+    // 留言 *********************************************************************
+    const updatePostComment = async (updatePost) => {
+      const postIndex = posts.value.findIndex(
+        (post) => post._id === updatePost._id
+      );
+
+      if (postIndex !== -1) {
+        posts.value.splice(postIndex, 1, updatePost);
+      }
+    };
+    // 留言 *********************************************************************
+
     // 前往個人頁
     const router = useRouter();
-    const goPersonalPage = (userId) => {
-      router.push({ name: "Personal", params: { personalId: userId } });
+    const goPersonalPage = (id) => {
+      router.push({ name: "Personal", params: { personalId: id } });
     };
 
     const init = async () => {
@@ -142,6 +169,9 @@ export default {
 
       getPosts,
       toggleLike,
+
+      updatePostComment,
+
       goPersonalPage,
     };
   },

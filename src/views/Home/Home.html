@@ -64,6 +64,26 @@
                   </div>
                 </div>
 
+                <!-- 留言區 -->
+                <div class="report-message space-y-4 group-hover:block">
+                  <!-- Input -->
+                  <InputComment class="flex gap-2 items-center" :postId="post._id" @submit="updatePostComment" />
+
+                  <!-- 留言紀錄 -->
+                  <div class="bg-gray rounded-lg p-4" v-for="comment in post.comments" :key="comment._id">
+                    <div class="flex gap-4">
+                      <img :src="comment.userPhoto" class="w-full h-full max-h-[40px] max-w-[40px] rounded-full"
+                        alt="avatarImage" />
+                      <div class="space-y-1">
+                        <p class="">{{ comment.userName }}</p>
+                        <p class="text-xs text-gray-base font-num">{{ comment.createdAtDisplay }}</p>
+                        <p>{{ comment.comment }}</p>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+
               </div>
             </div>
           </div>
