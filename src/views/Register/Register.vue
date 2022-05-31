@@ -39,7 +39,10 @@ export default {
       password: yup
         .string()
         .required("請填寫 密碼")
-        .min(4, "密碼最少 4 個字元"),
+        .matches(
+          /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z0-9]{8,}$/,
+          "密碼需至少 8 碼以上，並中英混合，不可以輸入空白字元、特殊符號"
+        ),
       confirmPassword: yup
         .string()
         .required("請填寫 確認密碼")
