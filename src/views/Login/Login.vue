@@ -87,6 +87,12 @@ export default {
       }
     });
 
+    const loginByGoogle = () => {
+      window.location.href = `${
+        import.meta.env.VITE_BACKEND_HOST
+      }/auth/google/login`;
+    };
+
     return {
       errors,
       email,
@@ -97,6 +103,7 @@ export default {
 
       isLoginFailed,
       onSubmit,
+      loginByGoogle,
     };
   },
 };
