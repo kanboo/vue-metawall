@@ -84,7 +84,7 @@ export default {
         // 上傳圖檔 & 取得 Image url
         const fd = new FormData();
         fd.append("image", file, file.name);
-        const response = await axios.post("/api/v1/image", fd);
+        const response = await axios.post("/api/v1/image?type=avatar", fd);
         photo.value = response.data?.data?.link ?? "";
         imageValidated.value = true;
       } catch (e) {
