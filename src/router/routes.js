@@ -13,6 +13,12 @@ export default [
     meta: { requiresAuth: false, isExcludeLayout: true },
   },
   {
+    name: "Privacy",
+    path: "/privacy",
+    component: () => import("@/views/Privacy"),
+    meta: { requiresAuth: false, isExcludeLayout: true },
+  },
+  {
     name: "AuthCallback",
     path: "/auth/callback",
     component: () => import("@/views/AuthCallback"),
