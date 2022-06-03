@@ -93,6 +93,12 @@ export default {
       }/auth/google/login`;
     };
 
+    const loginByFacebook = () => {
+      window.location.href = `${
+        import.meta.env.VITE_BACKEND_HOST
+      }/auth/facebook/login`;
+    };
+
     return {
       errors,
       email,
@@ -104,6 +110,7 @@ export default {
       isLoginFailed,
       onSubmit,
       loginByGoogle,
+      loginByFacebook,
     };
   },
 };
