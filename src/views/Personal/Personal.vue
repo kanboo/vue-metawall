@@ -106,9 +106,10 @@ export default {
         const params = {
           ...search.value,
           user: userId.value,
+          all: true,
         };
         const response = await axios.get("/api/v1/posts", { params });
-        posts.value = response.data?.data ?? [];
+        posts.value = response.data?.data?.data ?? [];
         hasNewPosts.value = false;
       } catch (e) {
         console.error(e);

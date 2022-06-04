@@ -23,14 +23,14 @@
         </div>
 
         <!-- 貼文區 -->
-        <template v-if="isFetchLoading">
+        <template v-if="isFirstFetchLoading">
           <CardSkeleton v-for="i in 2" />
         </template>
         <template v-else-if="normalizedPosts.length">
           <div class="card-list relative space-y-4">
             <div v-show="hasNewPosts"
               class="absolute -top-3 left-0 right-0 mx-auto flex justify-center items-center text-white text-center bg-primary opacity-95 w-32 py-2 rounded-full cursor-pointer"
-              @click="getPosts">
+              @click="loadLatestPosts">
               <span>載入最新貼文</span>
             </div>
             <div class="card" v-for="post in normalizedPosts" :key="post._id">
@@ -102,6 +102,11 @@
             </div>
           </div>
         </template>
+
+        <!-- Infinite Warp -->
+        <div ref="infiniteWrap" class="w-full py-16">
+          <IconLoading v-show="isFetchLoading" class="h-8 w-8 text-gray-600 mx-auto" />
+        </div>
       </div>
 
       <!-- 側邊 Menu -->

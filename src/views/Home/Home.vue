@@ -1,5 +1,5 @@
 <script>
-import { computed, ref, watch } from "vue";
+import { computed, ref, watch, nextTick } from "vue";
 import { useRouter } from "vue-router";
 import { useToggle, useDebounceFn } from "@vueuse/core";
 import { format } from "date-fns";
@@ -12,6 +12,7 @@ import { userId } from "@/store/user";
 import SideMenu from "@/components/SideMenu";
 import CardSkeleton from "@/components/CardSkeleton";
 import InputComment from "@/components/InputComment";
+import IconLoading from "@/components/IconLoading";
 
 const ICON_DEFAULT_USER = "https://api.iconify.design/ri:user-5-line.svg";
 
@@ -27,18 +28,53 @@ export default {
     SideMenu,
     CardSkeleton,
     InputComment,
+    IconLoading,
   },
 
   setup() {
     // 貼文 *********************************************************************
+    const infiniteWrap = ref(null);
     const search = ref({
       timeSort: SORT_TYPE.DESC,
       keyword: "",
     });
+    const currentPage = ref(1);
     const posts = ref([]);
+    const paginator = ref(null);
 
     const hasNewPosts = ref(false);
     const [isFetchLoading, toggleFetchLoading] = useToggle(true);
+
+    const isFirstFetchLoading = computed(() => {
+      return isFetchLoading.value && currentPage.value === 1;
+    });
+
+    const callbackInfinite = (entries) => {
+      if (!entries[0].isIntersecting) {
+        return;
+      }
+
+      const hasNextPage = paginator.value?.hasNextPage ?? false;
+      if (!hasNextPage) {
+        return;
+      }
+
+      currentPage.value += 1;
+      getPosts();
+    };
+
+    // infinite IO option
+    const option_infinite = {
+      root: null,
+      rootMargin: "-900px 0px 900px 0px",
+      threshold: [0],
+    };
+
+    // infinite create IO
+    const observerInfinite = new IntersectionObserver(
+      callbackInfinite,
+      option_infinite
+    );
 
     const normalizedPosts = computed(() => {
       return posts.value.map((post) => {
@@ -73,18 +109,40 @@ export default {
     const getPosts = useDebounceFn(async () => {
       try {
         toggleFetchLoading(true);
+        observerInfinite.unobserve(infiniteWrap.value);
 
-        const params = search.value;
+        const params = {
+          ...search.value,
+          page: currentPage.value,
+        };
         const response = await axios.get("/api/v1/posts", { params });
-        posts.value = response.data?.data ?? [];
-        hasNewPosts.value = false;
+        const newData = response.data?.data?.data ?? [];
+        posts.value = [...posts.value, ...newData];
+        paginator.value = response.data?.data?.paginator ?? null;
       } catch (e) {
         console.error(e);
       } finally {
         toggleFetchLoading(false);
+
+        nextTick(() => {
+          observerInfinite.observe(infiniteWrap.value);
+        });
       }
     }, 500);
-    watch(search.value, () => getPosts());
+
+    const loadLatestPosts = () => {
+      hasNewPosts.value = false;
+      currentPage.value = 1;
+      posts.value = [];
+      getPosts();
+    };
+
+    watch(search.value, () => {
+      currentPage.value = 1;
+      posts.value = [];
+      getPosts();
+    });
+
     onPostCreate((payload) => {
       console.log("onPostCreate", payload);
       hasNewPosts.value = true;
@@ -162,12 +220,15 @@ export default {
 
     return {
       SORT_TYPE,
+      infiniteWrap,
       search,
       hasNewPosts,
       isFetchLoading,
+      isFirstFetchLoading,
       normalizedPosts,
 
       getPosts,
+      loadLatestPosts,
       toggleLike,
 
       updatePostComment,
