@@ -101,7 +101,7 @@ export default {
       } catch (e) {
         const errorType = e.response?.data?.errorType ?? null;
 
-        if (errorType === apiErrorTypes.EMAIL_EXISTS) {
+        if (errorType === apiErrorTypes.USER_ALREADY_EXISTS) {
           const errorMessage = e.response?.data?.message ?? "此 Mail 已註冊！";
           actions.setFieldError("email", errorMessage);
         } else {
